@@ -38,3 +38,30 @@ else {
    /*Si entra al else es porque los datos no se pudo obtener la clave "usuarioEstaLogueado" o esta no tiene el valor "confirmado"*/ 
     window.location.href = "login.html";
 }
+
+// Verifico si el usuario está logueado.
+const usuarioEstaLogueado = sessionStorage.getItem("usuarioEstaLogueado") === "confirmado";
+//Obtengo estos elementos del documento html.
+const menuUsuario = document.getElementById("user-menu");
+const linkCerrarSesion = document.getElementById("link-cerrarsesion");
+
+
+if (usuarioEstaLogueado) {
+    // Obtenemos el nombre de usuario desde localStorage
+    const userName = localStorage.getItem("userName");
+    const botonMenuUsuario = document.getElementById("botonMenuUsuario");
+    botonMenuUsuario.textContent = userName;
+
+    menuUsuario.style.display = "inline-block";
+// Permite que el usuario cierre sesión y lo redirige a la página de inicio de sesión. 
+    linkCerrarSesion.addEventListener("click", function (e) {
+        e.preventDefault();
+
+        sessionStorage.removeItem("usuarioEstaLogueado");
+        localStorage.removeItem("userName");
+        window.location.href = "login.html";
+    });
+
+} else {
+    menuUsuario.style.display = "none";
+}

@@ -45,10 +45,17 @@
             <a class="nav-link" href="sell.html">Vender</a>
           </li>
          
-          <!--Agregamos el nombre de usuario a la barra de navegación-->
-          <li class="nav-item">
-            <a class="user"></a>
-          </li>
+          <div id="user-menu" class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="botonMenuUsuario" data-bs-toggle="dropdown" aria-expanded="false">
+             Usuario
+            </button>
+           <ul class="dropdown-menu" aria-labelledby="botonMenuUsuario">
+             <!--Acá agregamos las opciones del menu desplegable-->
+           <li><a class="dropdown-item" href= "cart.html">Mi carrito</a></li>
+           <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
+           <li><a class="dropdown-item" href="login.html" id="link-cerrarsesion">Cerrar Sesión</a></li>
+           </ul>  
+           </div>
         </ul>
       </div>
     </div>
