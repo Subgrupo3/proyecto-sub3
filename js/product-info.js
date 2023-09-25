@@ -1,5 +1,6 @@
 
 document.addEventListener("DOMContentLoaded", function () {
+  
   // Obtenemos el ID del producto guardado en el almacenamiento local
   const productId = localStorage.getItem("prodID");
 // Creamos la funcion que detecta el nuemro de estrelas y las muestra en pantalla
@@ -61,22 +62,29 @@ document.addEventListener("DOMContentLoaded", function () {
                  <div class="row">
                     ${productImages.map(image => `
                     <div class="col-md-3">
-                      <img src="${image}" alt="Imagen del Producto" class="img-fluid">
+                      <img src="${image}" alt="Imagen del Producto" class="img-fluid"> 
                     </div>
                     `).join("")}
                   </div>
 
                   <h4>Productos Relacionados</h4>
-                   <ul>
-                     ${relatedProducts.map(relatedProduct => `<li>${relatedProduct.name}</li>`).join("")}
-                   </ul>
+                  <div class="row">
+                  ${relatedProducts.map(relatedProduct => 
+                  `
+                  <div class="col-md-3">
+                  <img src="${relatedProduct.image}" alt="${relatedProduct.name}" class="img-fluid">
+                  ${relatedProduct.name} 
+                  </div>
+                    `).join("")}
+                  </div>
+                   
             </div>
-            ${id}
           `;
       })
       .catch(function (error) {
         console.error("Error al obtener la información del producto:", error);
       });
+
 
       //creamos la constante para la URL de los comentarios.
     const commentsURL = `https://japceibal.github.io/emercado-api/products_comments/${productId}.json`;
