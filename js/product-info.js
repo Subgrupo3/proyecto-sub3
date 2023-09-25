@@ -1,4 +1,9 @@
 
+function setProdID(id) {
+  localStorage.setItem("prodID", id);
+  window.location = "product-info.html"
+};
+
 document.addEventListener("DOMContentLoaded", function () {
   
   // Obtenemos el ID del producto guardado en el almacenamiento local
@@ -72,7 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
                   ${relatedProducts.map(relatedProduct => 
                   `
                   <div class="col-md-3">
-                  <img src="${relatedProduct.image}" alt="${relatedProduct.name}" class="img-fluid">
+                  <img src="${relatedProduct.image}" alt="${relatedProduct.name}" class="img-fluid"  onclick="setProdID('${relatedProduct.id}')">
                   ${relatedProduct.name} 
                   </div>
                     `).join("")}
