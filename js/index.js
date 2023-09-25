@@ -65,3 +65,38 @@ if (usuarioEstaLogueado) {
 } else {
     menuUsuario.style.display = "none";
 }
+
+
+// Función para cambiar el tema
+function toggleTheme() {
+    const body = document.body;
+    if (body.classList.contains('dark-theme')) {
+      body.classList.remove('dark-theme');
+      localStorage.setItem('theme', 'light'); // Guarda el tema en localStorage
+    } else {
+      body.classList.add('dark-theme');
+      localStorage.setItem('theme', 'dark'); // Guarda el tema en localStorage
+    }
+    updateThemeButtonText(); // Llama a esta función para actualizar el texto del botón
+  }
+  
+  // Función para actualizar el texto del botón
+  function updateThemeButtonText() {
+    const botonModo = document.getElementById('botonModo');
+    if (document.body.classList.contains('dark-theme')) {
+        botonModo.textContent = 'Cambiar a Modo Día'; // Si está en modo oscuro
+        console.log('Cambiado a Modo Día');
+    } else {
+        botonModo.textContent = 'Cambiar a Modo Noche'; // Si está en modo claro
+        console.log('Cambiado a Modo Noche');
+    }
+  }
+  
+  // Agregar evento al botón de alternancia de tema
+  const botonModo = document.getElementById('botonModo');
+  if (botonModo) {
+    botonModo.addEventListener('click', toggleTheme);
+  }
+  
+  // Llama a esta función al cargar la página para establecer el texto del botón inicial
+  updateThemeButtonText();
