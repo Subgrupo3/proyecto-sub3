@@ -281,12 +281,11 @@ ul {
 
 /* Estilo para el modo noche */
 .modo-noche {
-  background-color:#fff;
-  color:chartreuse;
+  background-color:#333;
+  color: white;
 }
 
-/* Estilo para el modo día */
-.modo-dia {
-  background-color:black; 
-  color:darkblue; 
+.modo-noche footer{
+  background-color: #212529;
 }
+
