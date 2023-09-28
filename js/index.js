@@ -1,17 +1,17 @@
-if(sessionStorage.getItem("usuarioEstaLogueado") == "confirmado") {
+if(sessionStorage.getItem("usuarioEstaLogueado") == "confirmado"){
     /* Primero obtengo el item con la clave "usuarioEstaLogueado" y me fijo si tiene el valor que yo le asigné 
 al loguear al usuario. Si los datos son los que yo le asigné, se va a desplegar toda la página, dando acceso al usuario. Sino entra en el else*/
 
 document.addEventListener("DOMContentLoaded", function(){
-    document.getElementById("autos").addEventListener("click", function() {
+    document.getElementById("autos").addEventListener("click", function(){
         localStorage.setItem("catID", 101);
         window.location = "products.html"
     });
-    document.getElementById("juguetes").addEventListener("click", function() {
+    document.getElementById("juguetes").addEventListener("click", function(){
         localStorage.setItem("catID", 102);
         window.location = "products.html"
     });
-    document.getElementById("muebles").addEventListener("click", function() {
+    document.getElementById("muebles").addEventListener("click", function(){
         localStorage.setItem("catID", 103);
         window.location = "products.html"
     });
@@ -67,36 +67,50 @@ if (usuarioEstaLogueado) {
 }
 
 
-// Función para cambiar el tema
-function toggleTheme() {
+
+// Verificamos si el usuario ya ha seleccionado un modo previamente
+let modoActual = localStorage.getItem('modo');
+
+// Función para cambiar el modo
+function cambiarModo() {
+    // Obtenemos una referencia al cuerpo (body) del documento
     const body = document.body;
-    if (body.classList.contains('dark-theme')) {
-      body.classList.remove('dark-theme');
-      localStorage.setItem('theme', 'light'); // Guarda el tema en localStorage
+    
+    // Obtenemos una referencia al botón con el id 'modoBoton'
+    const boton = document.getElementById('modoBoton');
+
+    // Verificar el modo actual y cambiarlo
+    if (modoActual === 'noche') {
+        // Si el modo actual es "noche", eliminamos la clase 'modo-noche' del cuerpo
+        body.classList.remove('modo-noche');
+
+        // Actualizamos el valor del modo en el almacenamiento local a "día"
+        localStorage.setItem('modo', 'dia');
+
+        // Cambiamos el texto del botón para indicar que se puede cambiar a Modo Noche
+        boton.textContent = 'Cambiar a Modo Noche';
+
+        // Actualizamos la variable 'modoActual' para reflejar el nuevo modo
+        modoActual = 'dia';
     } else {
-      body.classList.add('dark-theme');
-      localStorage.setItem('theme', 'dark'); // Guarda el tema en localStorage
+        // Si el modo actual no es "noche" (por defecto es "día"), agregamos la clase 'modo-noche' al cuerpo
+        body.classList.add('modo-noche');
+
+        // Actualizamos el valor del modo en el almacenamiento local a "noche"
+        localStorage.setItem('modo', 'noche');
+
+        // Cambiamos el texto del botón para indicar que se puede cambiar a Modo Día
+        boton.textContent = 'Cambiar a Modo Día';
+
+        // Actualizamos la variable 'modoActual' para reflejar el nuevo modo
+        modoActual = 'noche';
     }
-    updateThemeButtonText(); // Llama a esta función para actualizar el texto del botón
-  }
-  
-  // Función para actualizar el texto del botón
-  function updateThemeButtonText() {
-    const botonModo = document.getElementById('botonModo');
-    if (document.body.classList.contains('dark-theme')) {
-        botonModo.textContent = 'Cambiar a Modo Día'; // Si está en modo oscuro
-        console.log('Cambiado a Modo Día');
-    } else {
-        botonModo.textContent = 'Cambiar a Modo Noche'; // Si está en modo claro
-        console.log('Cambiado a Modo Noche');
-    }
-  }
-  
-  // Agregar evento al botón de alternancia de tema
-  const botonModo = document.getElementById('botonModo');
-  if (botonModo) {
-    botonModo.addEventListener('click', toggleTheme);
-  }
-  
-  // Llama a esta función al cargar la página para establecer el texto del botón inicial
-  updateThemeButtonText();
+}
+
+// Obtenemos una referencia al botón con el id 'modoBoton'
+let boton = document.getElementById('modoBoton');
+
+// Asignamos un manejador de eventos al botón para que llame a la función 'cambiarModo' cuando se haga clic
+boton.addEventListener('click', cambiarModo); 
+
+

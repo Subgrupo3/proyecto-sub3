@@ -278,3 +278,15 @@ span.psw {
 ul {
   list-style: none;
 }
+
+/* Estilo para el modo noche */
+.modo-noche {
+  background-color:#fff;
+  color:chartreuse;
+}
+
+/* Estilo para el modo día */
+.modo-dia {
+  background-color:black; 
+  color:darkblue; 
+}
