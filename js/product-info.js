@@ -62,28 +62,55 @@ document.addEventListener("DOMContentLoaded", function () {
 
             <p class="text-start"><strong> Imágenes ilustrativas </strong></p>
             
+            
             <div>
-              <h4>Imágenes del Producto</h4>
-                 <div class="row">
-                    ${productImages.map(image => `
-                    <div class="col-md-3">
-                      <img src="${image}" alt="Imagen del Producto" class="img-fluid"> 
-                    </div>
-                    `).join("")}
-                  </div>
+  <h4>Imágenes del Producto</h4>
+  <div id="product-carousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      ${productImages.map((image, index) => `
+        <div class="carousel-item ${index === 0 ? 'active' : ''}">
+          <div class="d-flex justify-content-center align-items-center">
+            <img src="${image}" alt="Imagen del Producto" class="smaller-image">
+          </div>
+        </div>
+      `).join("")}
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#product-carousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Anterior</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#product-carousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Siguiente</span>
+    </button>
+  </div>
+</div>
 
-                  <h4>Productos Relacionados</h4>
-                  <div class="row">
-                  ${relatedProducts.map(relatedProduct => 
-                  `
-                  <div class="col-md-3">
-                  <img src="${relatedProduct.image}" alt="${relatedProduct.name}" class="img-fluid"  onclick="setProdID('${relatedProduct.id}')">
-                  ${relatedProduct.name} 
-                  </div>
-                    `).join("")}
-                  </div>
-                   
-            </div>
+<div>
+  <h4>Productos Relacionados</h4>
+  <div id="related-products-carousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      ${relatedProducts.map((relatedProduct, index) => `
+        <div class="carousel-item ${index === 0 ? 'active' : ''}">
+          <div class="d-flex justify-content-center align-items-center">
+            <img src="${relatedProduct.image}" alt="${relatedProduct.name}" class="smaller-image">
+          </div>
+        </div>
+      `).join("")}
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#related-products-carousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Anterior</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#related-products-carousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Siguiente</span>
+    </button>
+  </div>
+</div>
+
+
+
           `;
       })
       .catch(function (error) {
@@ -184,3 +211,13 @@ for (let i = 0; i < mostrarUser.length; i++) {
 
 //join("") se utiliza para unir todos los fragmentos HTML en una sola cadena de texto.//
 //map es un método de JavaScript que se utiliza para iterar sobre cada elemento del array//
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Resto de tu código JavaScript
+
+  // Inicializar el carrusel de imágenes del producto seleccionado al cargar la página
+  var productCarousel = new bootstrap.Carousel(document.getElementById("product-carousel"));
+
+  // Inicializar el carrusel de productos relacionados al cargar la página
+  var relatedProductsCarousel = new bootstrap.Carousel(document.getElementById("related-products-carousel"));
+});
