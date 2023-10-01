@@ -75,11 +75,11 @@ document.addEventListener("DOMContentLoaded", function () {
         </div>
       `).join("")}
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#product-carousel" data-bs-slide="prev">
+    <button class="carousel-control-prev bg-secondary" type="button" data-bs-target="#product-carousel" data-bs-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Anterior</span>
     </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#product-carousel" data-bs-slide="next">
+    <button class="carousel-control-next bg-secondary" type="button" data-bs-target="#product-carousel" data-bs-slide="next">
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Siguiente</span>
     </button>
@@ -93,16 +93,16 @@ document.addEventListener("DOMContentLoaded", function () {
       ${relatedProducts.map((relatedProduct, index) => `
         <div class="carousel-item ${index === 0 ? 'active' : ''}">
           <div class="d-flex justify-content-center align-items-center">
-            <img src="${relatedProduct.image}" alt="${relatedProduct.name}" class="smaller-image">
+            <img src="${relatedProduct.image}" alt="${relatedProduct.name}" class="smaller-image" onclick="setProdID('${relatedProduct.id}')">
           </div>
         </div>
       `).join("")}
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#related-products-carousel" data-bs-slide="prev">
+    <button class="carousel-control-prev bg-secondary" type="button" data-bs-target="#related-products-carousel" data-bs-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Anterior</span>
     </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#related-products-carousel" data-bs-slide="next">
+    <button class="carousel-control-next bg-secondary" type="button" data-bs-target="#related-products-carousel" data-bs-slide="next">
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Siguiente</span>
     </button>
