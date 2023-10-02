@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -29,7 +30,7 @@
           <li class="nav-item">
             <a class="nav-link" href="sell.html">Vender</a>
           </li>
-
+          
           <div id="user-menu" class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="botonMenuUsuario" data-bs-toggle="dropdown" aria-expanded="false">
              Usuario
@@ -39,18 +40,55 @@
            <li><a class="dropdown-item" href= "cart.html">Mi carrito</a></li>
            <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
            <li><a class="dropdown-item" href="login.html" id="link-cerrarsesion">Cerrar Sesión</a></li>
+           <li><button id="modoBoton">Cambiar a modo noche</button></li>
            </ul>  
            </div>
-        
+          
         </ul>
       </div>
     </div>
   </nav>
+
   <main>
     <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
-      </div>
+      <div id="carrito-info"  width="80%"></div> <!-- Aquí mostramos la información del carrito -->
+      <div class="text-start">
+        <form>
+          <h3>Tipo de envio</h3>
+          <label>
+            <input class="mx-2" type="radio" name="envio" value="premium"> Premium 2 a 5 días (15%)
+          </label><br>
+          <label>
+            <input class="mx-2" type="radio" name="envio" value="express">Express 5 a 8 días (7%)
+          </label><br>
+          <label>
+            <input class="mx-2" type="radio" name="envio" value="standard">Standard 12 a 15 dias (5%)
+          </label><br>
+          <h3 class="mt-5">Dirección de envío</h3>
+          <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="calle" class="form-label">Calle</label>
+                    <input type="text" class="form-control" id="calle">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="numero" class="form-label">Número</label>
+                    <input type="text" class="form-control" id="numero">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="mb-3">
+                    <label for="esquina" class="form-label">Esquina</label>
+                    <input type="text" class="form-control" id="esquina">
+                </div>
+            </div>
+        </div>
+        </form>
+       </div>
     </div>
   </main>
   <footer class="text-muted">
@@ -58,7 +96,7 @@
       <p class="float-end">
         <a href="#">Volver arriba</a>
       </p>
-      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a></p>
+      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jóvenes a Programar</a></p>
     </div>
   </footer>
   <div id="spinner-wrapper">
@@ -73,6 +111,7 @@
   <script src="js/index.js"></script>
   <script src="js/init.js"></script>
   <script src="js/cart.js"></script>
+  <script src="js/modo.js"></script>
 </body>
 
 </html>
