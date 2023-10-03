@@ -250,6 +250,13 @@ img.avatar {
   margin: 0 auto; /* Esto centra el contenedor horizontalmente en la página */
 }
 
+.container img {
+  width: 25%;
+  border-radius: 5px;
+  
+}
+
+
 span.psw {
   float: right;
   padding-top: 16px;
@@ -297,4 +304,15 @@ ul {
 
 #articulos-carrito{
   border-bottom: 1px solid #000;
+}
+
+#agregarProducto{
+  position: absolute;
+  right: 120px;
+  font-size: 20px;
+  line-height: 50px;
+  text-align: center;
+  width: 300px;
+  height: 80px;
+  align-items: right;
 }

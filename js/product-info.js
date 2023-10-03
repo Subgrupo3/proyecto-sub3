@@ -4,10 +4,12 @@ function setProdID(id) {
   window.location = "product-info.html"
 };
 
-document.addEventListener("DOMContentLoaded", function () {
-  
   // Obtenemos el ID del producto guardado en el almacenamiento local
   const productId = localStorage.getItem("prodID");
+
+document.addEventListener("DOMContentLoaded", function () {
+  
+
 // Creamos la funcion que detecta el nuemro de estrelas y las muestra en pantalla
   function generateStars(score) {
     let stars = '';
@@ -46,29 +48,13 @@ document.addEventListener("DOMContentLoaded", function () {
         // Mostramos la información del producto en el HTML que para eso añadimos el container
         const productInfoContainer = document.getElementById("product-info-container");
         productInfoContainer.innerHTML = `
-            <h1 class="text-start">${productName}</h1>
-            <hr/>
-            <p class="text-start"><strong> Precio:</strong></p>
-            <p class="text-start"> ${productCurrency} ${productCost} </p>
-
-            <p class="text-start"><strong> Descripción:</strong></p>
-            <p class="text-start"> ${productDescription}</p>
-
-            <p class="text-start"><strong> Categoría:</strong></p>
-            <p class="text-start">${productCategory}</p>
-
-            <p class="text-start"><strong> Cantidad de vendidos:</strong></p>
-            <p class="text-start">${productSoldCount}</p>
-
-            <p class="text-start"><strong> Imágenes ilustrativas </strong></p>
-            
-            
-            <div>
+        <br><br>
+         <div>
   <h4>Imágenes del Producto</h4>
   <div id="product-carousel" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
       ${productImages.map((image, index) => `
-        <div class="carousel-item ${index === 0 ? 'active' : ''}">
+        <div class="carousel-item ${index === 0 ? 'active' : ''}" h>
           <div class="d-flex justify-content-center align-items-center">
             <img src="${image}" alt="Imagen del Producto" class="smaller-image">
           </div>
@@ -84,8 +70,22 @@ document.addEventListener("DOMContentLoaded", function () {
       <span class="visually-hidden">Siguiente</span>
     </button>
   </div>
-</div>
+</div><br>
 
+<h1 class="text-start">${productName}</h1>
+            <hr/>
+            <p class="text-start"><strong> Precio:</strong></p>
+            <p class="text-start"> ${productCurrency} ${productCost} </p>
+
+            <p class="text-start"><strong> Descripción:</strong></p>
+            <p class="text-start"> ${productDescription}</p>
+
+            <p class="text-start"><strong> Categoría:</strong></p>
+            <p class="text-start">${productCategory}</p>
+
+            <p class="text-start"><strong> Cantidad de vendidos:</strong></p>
+            <p class="text-start">${productSoldCount}</p><hr>
+            
 <div>
   <h4>Productos Relacionados</h4>
   <div id="related-products-carousel" class="carousel slide" data-bs-ride="carousel">
@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", function () {
     </button>
   </div>
 </div>
-
+<hr>
 
 
           `;
@@ -192,7 +192,7 @@ comentariosNuevos += `
 </ul>
 `;
 
-comentarios.innerHTML = comentariosNuevos;
+comentarios.innerHTML += comentariosNuevos;
 
 })
 
@@ -207,7 +207,7 @@ let mostrarUser = document.getElementsByClassName("user");
 for (let i = 0; i < mostrarUser.length; i++) {
   mostrarUser[i].textContent = storedData;
 }
-});
+
 
 //join("") se utiliza para unir todos los fragmentos HTML en una sola cadena de texto.//
 //map es un método de JavaScript que se utiliza para iterar sobre cada elemento del array//
@@ -220,4 +220,46 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Inicializar el carrusel de productos relacionados al cargar la página
   var relatedProductsCarousel = new bootstrap.Carousel(document.getElementById("related-products-carousel"));
+});
+
+let agregarProducto = document.getElementById("agregarProducto");
+
+
+agregarProducto.addEventListener("click", function () {
+  if (productId) {
+    // Construimos la URL para obtener la información del producto
+    const productURL = `https://japceibal.github.io/emercado-api/products/${productId}.json`;
+
+    // Realizamos la solicitud GET para obtener la información del producto mediante un fetch
+    fetch(productURL)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (productData) {
+        // Accedemos a los campos de información del producto (guiado por la API)
+        const productName = productData.name;
+        const productCost = productData.cost;
+        const productCurrency = productData.currency;
+        const productImages = productData.images[0];
+
+
+        localStorage.setItem("prodID", productId);
+        localStorage.setItem("prodName", productName);
+        localStorage.setItem("prodCost", productCost);
+        localStorage.setItem("prodCurrency", productCurrency);
+        localStorage.setItem("prodImage", productImages);
+  
+        window.location = "cart.html"
+/*
+        // Llamar a agregarCarrito con los datos del producto
+        agregarCarrito(productName, productCost, productCurrency, productImages);*/
+      })
+      .catch(function (error) {
+        console.error("Error al obtener la información del producto:", error);
+      });
+  }
+});
+
+
+
 });
