@@ -250,7 +250,7 @@ img.avatar {
   margin: 0 auto; /* Esto centra el contenedor horizontalmente en la página */
 }
 
-.container img {
+#carrito-info img {
   width: 25%;
   border-radius: 5px;
   
