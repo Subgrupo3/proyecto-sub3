@@ -253,7 +253,17 @@ img.avatar {
 #carrito-info img {
   width: 25rem;
   border-radius: 5px;
+  
 }
+
+@media only screen and (max-width: 400px) {
+  /* Estilos para dispositivos iPhone o pantallas con un ancho máximo de 400px */
+  #carrito-info {
+    max-width: 5rem; 
+  }
+}
+
+
 
 span.psw {
   float: right;
