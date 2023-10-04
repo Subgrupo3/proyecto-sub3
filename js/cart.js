@@ -49,6 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // Crear elementos HTML para mostrar la información
             const productoInfo = document.createElement('div');
             productoInfo.innerHTML = `
+                
                 <h1>Carrito de Compras</h1>
                 <h3 class="text-start">Artículos a comprar</h3>
                 <table id="tablaCarrito">
