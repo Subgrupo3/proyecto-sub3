@@ -50,35 +50,51 @@ document.addEventListener("DOMContentLoaded", function () {
             const productoInfo = document.createElement('div');
             productoInfo.innerHTML = `
                 
-                <h1>Carrito de Compras</h1>
-                <h3 class="text-start">Artículos a comprar</h3>
-                <table id="tablaCarrito">
-                    <thead id="articulos-carrito">
-                        <th> </th>
-                        <th>Nombre</th>
-                        <th>Costo</th>
-                        <th>Cantidad</th>
-                        <th>Subtotal</th>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><img src="${imagenProducto}" alt="Producto" width="80%"></td>
-                            <td class="fw-normal">${nombreProducto}</td>
-                            <td class="fw-normal">${monedaProducto} ${costoProducto} </td>
-                            <td><input class="form-control form-control-sm" type="number" value="${cantidadProducto}" id="cantidad-input" ></td>
-                            <td><span id="subtotal">${monedaProducto} ${subtotalProducto} </span></td>
-                        </tr>
-                        <tr>
-                            <td><img src="${productImage}" alt="Producto" width="80%"></td>
-                            <td>${productName}</td>
-                            <td>${productCurrency} ${productCost} </td>
-                            <td><input class="form-control form-control-sm" type="number" value="${cantidadProducto}" id="cantidad-input-local" ></td>
-                            <td><span id="subtotal-local">${productCurrency} ${subtotalProductoLocal} </span></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <hr>
-                <hr>
+            <div class="container">
+            <h1 class="my-4">Carrito de Compras</h1>
+        
+            <h3 class="text-start">Artículos a comprar</h3>
+        
+            <div class="row mt-2">
+                <div class="col-md-2">
+                    <img src="${imagenProducto}" alt="Producto" class="img-fluid">
+                </div>
+                <div class="col-md-2">
+                    <p class="fw-normal">${nombreProducto}</p>
+                </div>
+                <div class="col-md-2">
+                    <p class="fw-normal">${monedaProducto} ${costoProducto}</p>
+                </div>
+                <div class="col-md-2">
+                    <input class="form-control form-control-sm" type="number" value="${cantidadProducto}" id="cantidad-input">
+                </div>
+                <div class="col-md-2">
+                    <p><span id="subtotal">${monedaProducto} ${subtotalProducto}</span></p>
+                </div>
+            </div>
+        
+            <div class="row mt-2">
+                <div class="col-md-2">
+                    <img src="${productImage}" alt="Producto" class="img-fluid">
+                </div>
+                <div class="col-md-2">
+                    <p>${productName}</p>
+                </div>
+                <div class="col-md-2">
+                    <p>${productCurrency} ${productCost}</p>
+                </div>
+                <div class="col-md-2">
+                    <input class="form-control form-control-sm" type="number" value="${cantidadProducto}" id="cantidad-input-local">
+                </div>
+                <div class="col-md-2">
+                    <p><span id="subtotal-local">${productCurrency} ${subtotalProductoLocal}</span></p>
+                </div>
+            </div>
+        
+            <hr>
+            <hr>
+        </div>
+        
             `;
 
             // Agregar el elemento div al contenedor en la página HTML
