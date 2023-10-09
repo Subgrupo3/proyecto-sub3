@@ -213,7 +213,6 @@ for (let i = 0; i < mostrarUser.length; i++) {
 //map es un método de JavaScript que se utiliza para iterar sobre cada elemento del array//
 
 document.addEventListener("DOMContentLoaded", function () {
-  // Resto de tu código JavaScript
 
   // Inicializar el carrusel de imágenes del producto seleccionado al cargar la página
   var productCarousel = new bootstrap.Carousel(document.getElementById("product-carousel"));
