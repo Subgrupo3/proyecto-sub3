@@ -88,7 +88,8 @@ function productJson() {
               <td><img src="${imagenProducto}" alt="${nombreProducto}" width="100"></td>
               <td>${nombreProducto}</td>
               <td>${monedaProducto} ${costoProducto}</td>
-              <td><input class="form-control form-control-sm" type="number" value="${cantidadProducto}" id="cantidad-input" onchange="updateSubtotal(0)"></td>
+              <td><input class="form-control form-control-sm" type="number" value="${product.quantity}" id="cantidad-input-${index}" onchange="updateSubtotal(${index})"></td>
+
               <td><button class="btn btn-danger" onclick="removeProduct(0)">Eliminar</button></td>
               <td id="subtotal-0">${subtotalProducto.toFixed(2)}</td>
             </tr>
@@ -103,18 +104,20 @@ function productJson() {
     });
 }
 
-// Llamar a la función para cargar la información del producto en el carrito
-productJson();
-
-// Función para actualizar el subtotal cuando cambia la cantidad de producto
+// Función para actualizar el subtotal cuando se cambie la cantidad
 function updateSubtotal(index) {
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
   const quantityInput = document.getElementById(`cantidad-input-${index}`);
   const subtotalElement = document.getElementById(`subtotal-${index}`);
-  const product = cart[index];
 
-  const newQuantity = parseInt(quantityInput.value);
-  const newSubtotal = (product.cost * newQuantity).toFixed(2);
+  if (quantityInput && subtotalElement) {
+    const newQuantity = parseInt(quantityInput.value);
+    const product = cart[index];
 
-  subtotalElement.textContent = `${product.currency} ${newSubtotal}`;
+    if (!isNaN(newQuantity) && newQuantity >= 0) {
+      product.quantity = newQuantity; // Actualizar la cantidad en el objeto del producto
+      subtotalElement.textContent = (product.cost * newQuantity).toFixed(2); // Actualizar el subtotal en la tabla
+      localStorage.setItem("cart", JSON.stringify(cart)); // Actualizar el carrito en el almacenamiento local
+    }
+  }
 }
