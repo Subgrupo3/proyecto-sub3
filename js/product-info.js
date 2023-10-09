@@ -232,32 +232,41 @@ agregarProducto.addEventListener("click", function () {
 
     // Realizamos la solicitud GET para obtener la información del producto mediante un fetch
     fetch(productURL)
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (productData) {
-        // Accedemos a los campos de información del producto (guiado por la API)
-        const productName = productData.name;
-        const productCost = productData.cost;
-        const productCurrency = productData.currency;
-        const productImages = productData.images[0];
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (productData) {
+      const productName = productData.name;
+      const productCost = productData.cost;
+      const productCurrency = productData.currency;
+      const productImages = productData.images[0];
 
+      // Crear un objeto que represente el producto a agregar al carrito
+      const productToAdd = {
+        id: productId,
+        name: productName,
+        cost: productCost,
+        currency: productCurrency,
+        image: productImages,
+        quantity: 1, // Puedes ajustar la cantidad según tus necesidades
+      };
 
-        localStorage.setItem("prodID", productId);
-        localStorage.setItem("prodName", productName);
-        localStorage.setItem("prodCost", productCost);
-        localStorage.setItem("prodCurrency", productCurrency);
-        localStorage.setItem("prodImage", productImages);
-  
-        window.location = "cart.html"
-/*
-        // Llamar a agregarCarrito con los datos del producto
-        agregarCarrito(productName, productCost, productCurrency, productImages);*/
-      })
-      .catch(function (error) {
-        console.error("Error al obtener la información del producto:", error);
-      });
-  }
+      // Obtener el carrito actual desde localStorage o crear uno nuevo
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+      // Agregar el producto al carrito
+      cart.push(productToAdd);
+
+      // Guardar el carrito actualizado en localStorage
+      localStorage.setItem("cart", JSON.stringify(cart));
+
+      // Redirigir al usuario a la página del carrito
+      window.location = "cart.html";
+    })
+    .catch(function (error) {
+      console.error("Error al obtener la información del producto:", error);
+    });
+}
 });
 
 
