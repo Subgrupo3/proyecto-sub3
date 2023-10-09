@@ -3,13 +3,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Obtener el carrito del almacenamiento local
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-  // Verificar si el carrito está vacío
-  if (cart.length === 0) {
-    cartInfoContainer.innerHTML = '<p class="alert alert-info">El carrito está vacío</p>';
-  } else {
-    mostrarCarrito(cart);
-  }
 });
 
 function mostrarCarrito(cart) {
