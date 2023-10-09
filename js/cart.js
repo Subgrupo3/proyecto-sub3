@@ -123,9 +123,10 @@ function updateSubtotalProducto(index, costoProducto) {
 }
 
 
-// Función para eliminar el producto del JSON del carrito
-function removeProductProducto() {
-  const carritoInfoContainer = document.getElementById('carrito-info');
-  const productoInfo = document.querySelector('#carrito-info > div');
-  carritoInfoContainer.removeChild(productoInfo);
+// Función para eliminar un producto del carrito
+function removeProduct(index) {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  cart.splice(index, 1); // Eliminar el producto del carrito
+  localStorage.setItem("cart", JSON.stringify(cart)); // Actualizar el carrito en el almacenamiento local
+  window.location.reload(); // Recargar la página para reflejar los cambios
 }
