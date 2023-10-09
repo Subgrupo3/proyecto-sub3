@@ -51,6 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
         <br><br>
          <div>
   <h4>Imágenes del Producto</h4>
+
   <div id="product-carousel" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
       ${productImages.map((image, index) => `
