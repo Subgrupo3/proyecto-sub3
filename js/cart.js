@@ -5,11 +5,14 @@ document.addEventListener("DOMContentLoaded", function () {
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
   mostrarCarrito(cart);
+
 });
 
 
-
 function mostrarCarrito(cart) {
+
+  productoJson();
+
   let cartHTML = '<h2 class="mb-4">Carrito de Compras</h2>';
   cartHTML += '<div class="table-responsive">';
   cartHTML += '<table class="table table-striped">';
@@ -44,8 +47,7 @@ function mostrarCarrito(cart) {
   const cartInfoContainer = document.getElementById("carrito-info");
   cartInfoContainer.innerHTML = cartHTML;
 }
-
-function productJson() {
+function productoJson() {
   // URL del carrito de compras
   const carritoUrl = 'https://japceibal.github.io/emercado-api/user_cart/25801.json';
 
@@ -65,37 +67,35 @@ function productJson() {
       const monedaProducto = producto.currency;
       const imagenProducto = producto.image;
 
-      // Calcular el subtotal inicial
-      const subtotalProducto = costoProducto * cantidadProducto;
+     // Obtener el carrito del almacenamiento local
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-      // Crear elementos HTML para mostrar la información
-      const carritoInfoContainer = document.getElementById('carrito-info');
-      const productoInfo = document.createElement('div');
+  // Verificar si el producto ya está en el carrito por su nombre
+  const existingProductIndex = cart.findIndex(item => item.name === nombreProducto);
 
-      productoInfo.innerHTML = `
-        <table class="table">
-          <tbody>
-            <tr>
-              <td><img src="${imagenProducto}" alt="${nombreProducto}" width="100"></td>
-              <td>${nombreProducto}</td>
-              <td>${monedaProducto} ${costoProducto}</td>
-              <td><input class="form-control form-control-sm" type="number" value="${cantidadProducto}" id="cantidad-input-producto" onchange="updateSubtotalProductoJson(${costoProducto})"></td>
-              <td><button class="btn btn-danger" onclick="removeProductProducto()">Eliminar</button></td>
-              <td id="subtotal-producto">${subtotalProducto.toFixed(2)}</td>
-            </tr>
-          </tbody>
-        </table>`;
+  if (existingProductIndex !== -1) {
+    // Si el producto ya está en el carrito, actualiza la cantidad
+    cart[existingProductIndex].quantity += cantidadProducto;
+  } else {
+    // Si el producto no está en el carrito, agrégalo
+    const productToAdd = {
+      name: nombreProducto,
+      cost: costoProducto,
+      currency: monedaProducto,
+      image: imagenProducto,
+      quantity: 1
+    };
+    cart.push(productToAdd);
+  }
 
-      // Agregar la información del producto al contenedor del carrito
-      carritoInfoContainer.appendChild(productoInfo);
+  // Guardar el carrito actualizado en localStorage
+  localStorage.setItem("cart", JSON.stringify(cart));
+
     })
     .catch(error => {
       console.error(error);
     });
 }
-
-// Llamar a la función para cargar la información del producto en el carrito
-productJson();
 
 // Función para actualizar el subtotal del producto del JSON cuando cambia la cantidad
 function updateSubtotalProductoJson(costoProducto) {
