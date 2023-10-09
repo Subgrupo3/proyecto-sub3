@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
       // Construir una tabla de Bootstrap para mostrar los productos en el carrito
       let cartHTML = '<h2 class="mb-4">Carrito de Compras</h2>';
+      cartHTML += '<div class="table-responsive">';
       cartHTML += '<table class="table table-striped">';
       cartHTML += '<thead>';
       cartHTML += '<tr>';
@@ -24,18 +25,19 @@ document.addEventListener("DOMContentLoaded", function () {
       cartHTML += '<tbody>';
   
       for (const product of cart) {
-        cartHTML += '<tr>';
-        cartHTML += `<td><img src="${product.image}" alt="${product.name}" width="100"></td>`;
-        cartHTML += `<td>${product.name}</td>`;
-        cartHTML += `<td>${product.currency} ${product.cost.toFixed(2)}</td>`;
-        cartHTML += `<td>${product.quantity}</td>`;
-        cartHTML += '<td><button class="btn btn-danger" onclick="removeProduct(${cart.indexOf(product)})">Eliminar</button></td>';
-        cartHTML += '</tr>';
-      }
-      
+  cartHTML += '<tr>';
+  cartHTML += `<td><img src="${product.image}" alt="${product.name}" width="100"></td>`;
+  cartHTML += `<td>${product.name}</td>`;
+  cartHTML += `<td>${product.currency} ${product.cost.toFixed(2)}</td>`;
+  cartHTML += `<td>${product.quantity}</td>`;
+  cartHTML += '<td><button class="btn btn-danger" onclick="removeProduct(${cart.indexOf(product)})">Eliminar</button></td>';
+  cartHTML += '</tr>';
+}
+
   
       cartHTML += '</tbody>';
       cartHTML += '</table>';
+      cartHTML += '</div>';
   
       // Mostrar el contenido del carrito en el contenedor
       cartInfoContainer.innerHTML = cartHTML;
