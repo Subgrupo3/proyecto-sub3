@@ -3,7 +3,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Obtener el carrito del almacenamiento local
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  mostrarCarrito(cart);
 });
+
+
 
 function mostrarCarrito(cart) {
   let cartHTML = '<h2 class="mb-4">Carrito de Compras</h2>';
