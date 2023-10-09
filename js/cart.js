@@ -1,4 +1,3 @@
-// En tu archivo cart.js
 document.addEventListener("DOMContentLoaded", function () {
   const cartInfoContainer = document.getElementById("carrito-info");
 
@@ -9,49 +8,44 @@ document.addEventListener("DOMContentLoaded", function () {
   if (cart.length === 0) {
     cartInfoContainer.innerHTML = '<p class="alert alert-info">El carrito está vacío</p>';
   } else {
-    let cartHTML = '<h2 class="mb-4">Carrito de Compras</h2>';
-    cartHTML += '<div class="table-responsive">';
-    cartHTML += '<table class="table table-striped">';
-    cartHTML += '<thead>';
-    cartHTML += '<tr>';
-    cartHTML += '<th>Imagen</th>';
-    cartHTML += '<th>Producto</th>';
-    cartHTML += '<th>Precio</th>';
-    cartHTML += '<th>Cantidad</th>';
-    cartHTML += '<th>Acciones</th>';
-    cartHTML += '<th>Subtotal</th>';
-    cartHTML += '</tr>';
-    cartHTML += '</thead>';
-    cartHTML += '<tbody>';
-
-    for (const [index, product] of cart.entries()) {
-      cartHTML += '<tr>';
-      cartHTML += `<td><img src="${product.image}" alt="${product.name}" width="100"></td>`;
-      cartHTML += `<td>${product.name}</td>`;
-      cartHTML += `<td>${product.currency} ${product.cost.toFixed(2)}</td>`;
-      cartHTML += `<td><input class="form-control form-control-sm" type="number" value="${product.quantity}" id="cantidad-input-${index}" onchange="updateSubtotal(${index})"></td>`;
-      cartHTML += `<td><button class="btn btn-danger" onclick="removeProduct(${index})">Eliminar</button></td>`;
-      cartHTML += `<td id="subtotal-${index}">${(product.cost * product.quantity).toFixed(2)}</td>`;
-      cartHTML += '</tr>';
-    }
-
-    cartHTML += '</tbody>';
-    cartHTML += '</table>';
-    cartHTML += '</div>';
-
-    // Mostrar el contenido del carrito en el contenedor
-    cartInfoContainer.innerHTML = cartHTML;
+    mostrarCarrito(cart);
   }
 });
 
+function mostrarCarrito(cart) {
+  let cartHTML = '<h2 class="mb-4">Carrito de Compras</h2>';
+  cartHTML += '<div class="table-responsive">';
+  cartHTML += '<table class="table table-striped">';
+  cartHTML += '<thead>';
+  cartHTML += '<tr>';
+  cartHTML += '<th>Imagen</th>';
+  cartHTML += '<th>Producto</th>';
+  cartHTML += '<th>Precio</th>';
+  cartHTML += '<th>Cantidad</th>';
+  cartHTML += '<th>Acciones</th>';
+  cartHTML += '<th>Subtotal</th>';
+  cartHTML += '</tr>';
+  cartHTML += '</thead>';
+  cartHTML += '<tbody>';
 
+  for (const [index, product] of cart.entries()) {
+    cartHTML += '<tr>';
+    cartHTML += `<td><img src="${product.image}" alt="${product.name}" width="100"></td>`;
+    cartHTML += `<td>${product.name}</td>`;
+    cartHTML += `<td>${product.currency} ${product.cost.toFixed(2)}</td>`;
+    cartHTML += `<td><input class="form-control form-control-sm" type="number" value="${product.quantity}" id="cantidad-input-${index}" onchange="updateSubtotalProducto(${index}, ${product.cost})"></td>`;
+    cartHTML += `<td><button class="btn btn-danger" onclick="removeProduct(${index})">Eliminar</button></td>`;
+    cartHTML += `<td id="subtotal-${index}">${(product.cost * product.quantity).toFixed(2)}</td>`;
+    cartHTML += '</tr>';
+  }
 
-// Función para eliminar un producto del carrito
-function removeProduct(index) {
-  const cart = JSON.parse(localStorage.getItem("cart")) || [];
-  cart.splice(index, 1); // Eliminar el producto del carrito
-  localStorage.setItem("cart", JSON.stringify(cart)); // Actualizar el carrito en el almacenamiento local
-  window.location.reload(); // Recargar la página para reflejar los cambios
+  cartHTML += '</tbody>';
+  cartHTML += '</table>';
+  cartHTML += '</div>';
+
+  // Mostrar el contenido del carrito en el contenedor
+  const cartInfoContainer = document.getElementById("carrito-info");
+  cartInfoContainer.innerHTML = cartHTML;
 }
 
 function productJson() {
@@ -88,10 +82,9 @@ function productJson() {
               <td><img src="${imagenProducto}" alt="${nombreProducto}" width="100"></td>
               <td>${nombreProducto}</td>
               <td>${monedaProducto} ${costoProducto}</td>
-              <td><input class="form-control form-control-sm" type="number" value="${product.quantity}" id="cantidad-input-${index}" onchange="updateSubtotal(${index})"></td>
-
-              <td><button class="btn btn-danger" onclick="removeProduct(0)">Eliminar</button></td>
-              <td id="subtotal-0">${subtotalProducto.toFixed(2)}</td>
+              <td><input class="form-control form-control-sm" type="number" value="${cantidadProducto}" id="cantidad-input-producto" onchange="updateSubtotalProductoJson(${costoProducto})"></td>
+              <td><button class="btn btn-danger" onclick="removeProductProducto()">Eliminar</button></td>
+              <td id="subtotal-producto">${subtotalProducto.toFixed(2)}</td>
             </tr>
           </tbody>
         </table>`;
@@ -104,20 +97,35 @@ function productJson() {
     });
 }
 
-// Función para actualizar el subtotal cuando se cambie la cantidad
-function updateSubtotal(index) {
-  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+// Llamar a la función para cargar la información del producto en el carrito
+productJson();
+
+// Función para actualizar el subtotal del producto del JSON cuando cambia la cantidad
+function updateSubtotalProductoJson(costoProducto) {
+  const quantityInput = document.getElementById('cantidad-input-producto');
+  const subtotalElement = document.getElementById('subtotal-producto');
+
+  const newQuantity = parseInt(quantityInput.value);
+  const newSubtotal = (costoProducto * newQuantity).toFixed(2);
+
+  subtotalElement.textContent = newSubtotal;
+}
+
+// Función para actualizar el subtotal del producto 
+function updateSubtotalProducto(index, costoProducto) {
   const quantityInput = document.getElementById(`cantidad-input-${index}`);
   const subtotalElement = document.getElementById(`subtotal-${index}`);
 
-  if (quantityInput && subtotalElement) {
-    const newQuantity = parseInt(quantityInput.value);
-    const product = cart[index];
+  const newQuantity = parseInt(quantityInput.value);
+  const newSubtotal = (costoProducto * newQuantity).toFixed(2);
 
-    if (!isNaN(newQuantity) && newQuantity >= 0) {
-      product.quantity = newQuantity; // Actualizar la cantidad en el objeto del producto
-      subtotalElement.textContent = (product.cost * newQuantity).toFixed(2); // Actualizar el subtotal en la tabla
-      localStorage.setItem("cart", JSON.stringify(cart)); // Actualizar el carrito en el almacenamiento local
-    }
-  }
+  subtotalElement.textContent = newSubtotal;
+}
+
+
+// Función para eliminar el producto del JSON del carrito
+function removeProductProducto() {
+  const carritoInfoContainer = document.getElementById('carrito-info');
+  const productoInfo = document.querySelector('#carrito-info > div');
+  carritoInfoContainer.removeChild(productoInfo);
 }
