@@ -102,24 +102,24 @@ productJson();
 
 // Función para actualizar el subtotal del producto del JSON cuando cambia la cantidad
 function updateSubtotalProductoJson(costoProducto) {
-  const quantityInput = document.getElementById('cantidad-input-producto');
-  const subtotalElement = document.getElementById('subtotal-producto');
+  const quantityInput = document.getElementById('cantidad-input-producto'); //Cantidad
+  const subtotalElement = document.getElementById('subtotal-producto'); //Subtotal anterior
 
-  const newQuantity = parseInt(quantityInput.value);
-  const newSubtotal = (costoProducto * newQuantity).toFixed(2);
+  const newQuantity = parseInt(quantityInput.value); //Se obtiene la  cantidad actualizada
+  const newSubtotal = (costoProducto * newQuantity).toFixed(2); //Se calcula el nuevo subtotal
 
-  subtotalElement.textContent = newSubtotal;
+  subtotalElement.textContent = newSubtotal; //Se actualiza
 }
 
-// Función para actualizar el subtotal del producto 
+// Función para actualizar el subtotal del producto del carrito en el localStorage
 function updateSubtotalProducto(index, costoProducto) {
-  const quantityInput = document.getElementById(`cantidad-input-${index}`);
-  const subtotalElement = document.getElementById(`subtotal-${index}`);
+  const quantityInput = document.getElementById(`cantidad-input-${index}`); //Elemento con id cantidad-input-${index}, que es la cantidad
+  const subtotalElement = document.getElementById(`subtotal-${index}`); //Elemento con id subtotal-${index}, que es el subtotal anterior
 
-  const newQuantity = parseInt(quantityInput.value);
-  const newSubtotal = (costoProducto * newQuantity).toFixed(2);
+  const newQuantity = parseInt(quantityInput.value); //Se obtiene la cantidad actualizada
+  const newSubtotal = (costoProducto * newQuantity).toFixed(2); //Se calcula el nuevo subtotal
 
-  subtotalElement.textContent = newSubtotal;
+  subtotalElement.textContent = newSubtotal; //Se actualiza
 }
 
 
