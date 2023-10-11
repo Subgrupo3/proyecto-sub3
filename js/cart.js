@@ -60,7 +60,7 @@ function mostrarCarrito(cart) {
 
     for (const [index, product] of cart.entries()) {
       cartHTML += '<tr>';
-      cartHTML += `<td><img src="${product.image}" alt="${product.name}" width="100" class="product-image" ></td>`;
+      cartHTML += `<td><img src="${product.image}" alt="${product.name}" width="100" class="product-image" onclick='localStorage.setItem("prodID", ${product.id}), window.location = "product-info.html"'></td>`;
       cartHTML += `<td>${product.name}</td>`;
       cartHTML += `<td>${product.currency} ${product.cost.toFixed(2)}</td>`;
       cartHTML += `<td><input class="form-control form-control-sm" type="number" value="${product.quantity}" id="cantidad-input-${index}" onchange="updateSubtotalProducto(${index}, ${product.cost})"></td>`;
