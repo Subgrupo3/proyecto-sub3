@@ -40,10 +40,10 @@ function mostrarCarrito(cart) {
   
   if (cart.length === 0) {
     // Si el carrito está vacío, mostrar un mensaje
-    cartInfoContainer.innerHTML = '<h2 class="mb-4">Carrito de Compras</h2><p class="text-light bg-danger card">El carrito está vacío.</p>';
+     '<h2 class="mb-4">Artículos a comprar</h2><p class="text-light bg-danger card">El carrito está vacío.</p>';
   } else {
     // Si hay productos en el carrito, mostrar la tabla
-    let cartHTML = '<h2 class="mb-4">Carrito de Compras</h2>';
+    let cartHTML = '<h2 class="mb-4" id="tituloCarrito">Artículos a comprar</h2>';
     cartHTML += '<div class="table-responsive">';
     cartHTML += '<table class="table table-striped">';
     cartHTML += '<thead>';

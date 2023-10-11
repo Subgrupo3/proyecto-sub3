@@ -42,11 +42,14 @@ nav a {
 }
 
 .jumbotron {
+  size: 100%;
   height: 50vh;
   padding: 5em inherit;
   margin-bottom: 0;
   background-color: #53C0FB;
+  /* Estilo para pantallas grandes (lg) */
   background: url('../img/cover_back.png');
+  max-width: 100%;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -54,12 +57,81 @@ nav a {
   font-weight: bold;
 }
 
-@media (min-width: 768px) {
+/* Estilo para pantallas medianas (md) */
+@media (max-width: 992px) {
   .jumbotron {
-    padding-top: 6rem;
-    padding-bottom: 6rem;
+  background: url('../img/login.png');
+  max-width: 100%;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: black;
+  font-weight: bold;
+  size: 100%;
+  height: 50vh;
+  padding: 5em inherit;
+  margin-bottom: 0;
+  background-color: white;
   }
+
+  #agregarProducto{
+    position: right;
+    padding: 5px;
+    right: 120px;
+    font-size: 15px;
+    line-height: 30px;
+    text-align: center;
+    width: 200px;
+    height: 60px;
+    align-items: center;
+  }
+
 }
+
+/* Estilo para pantallas pequeñas (sm) */
+@media (max-width: 768px) {
+  .jumbotron {
+    background: url('../img/login.png');
+    max-width: 100%;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: black;
+    font-weight: bold;
+    size: 100%;
+    height: 50vh;
+    padding: 5em inherit;
+    margin-bottom: 0;
+    background-color:white;
+    }
+
+    #agregarProducto{
+      position: right;
+      padding: 5px;
+      right: 120px;
+      font-size: 10px;
+      line-height: 25px;
+      text-align: center;
+      width: 150px;
+      height: 40px;
+      align-items: center;
+    }
+}
+
+#agregarProducto{
+  position: right;
+  padding: 5px;
+  right: 120px;
+  font-size: 20px;
+  line-height: 50px;
+  text-align: center;
+  width: 300px;
+  height: 80px;
+  align-items: right;
+}
+
+
+
 
 .jumbotron p:last-child {
   margin-bottom: 0;
@@ -68,8 +140,6 @@ nav a {
 .jumbotron-heading {
   font-weight: 300;
 }
-
-
 
 .jumbotron .container {
   max-width: 40rem;
@@ -305,13 +375,7 @@ ul {
   border-bottom: 1px solid #000;
 }
 
-#agregarProducto{
-  position: absolute;
-  right: 120px;
-  font-size: 20px;
-  line-height: 50px;
-  text-align: center;
-  width: 300px;
-  height: 80px;
-  align-items: right;
+
+#tituloCarrito{
+  text-align: left;
 }
