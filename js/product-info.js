@@ -248,7 +248,7 @@ agregarProducto.addEventListener("click", function () {
         cost: productCost,
         currency: productCurrency,
         image: productImages,
-        quantity: 1, // Puedes ajustar la cantidad según tus necesidades
+        quantity: 1
       };
 
       // Obtener el carrito actual desde localStorage o crear uno nuevo
