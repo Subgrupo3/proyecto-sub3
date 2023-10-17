@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+
   // Obtener el carrito del almacenamiento local
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
@@ -37,10 +38,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function mostrarCarrito(cart) {
   let cartInfoContainer = document.getElementById("carrito-info");
-  
+
   if (cart.length === 0) {
     // Si el carrito está vacío, mostrar un mensaje
-     '<h2 class="mb-4">Artículos a comprar</h2><p class="text-light bg-danger card">El carrito está vacío.</p>';
+    cartInfoContainer.innerHTML = '<h2 class="mb-4">Artículos a comprar</h2><p class="text-light bg-danger card">El carrito está vacío.</p>';
   } else {
     // Si hay productos en el carrito, mostrar la tabla
     let cartHTML = '<h2 class="mb-4" id="tituloCarrito">Artículos a comprar</h2>';
@@ -63,9 +64,12 @@ function mostrarCarrito(cart) {
       cartHTML += `<td><img src="${product.image}" alt="${product.name}" width="100" class="product-image" onclick='localStorage.setItem("prodID", ${product.id}), window.location = "product-info.html"'></td>`;
       cartHTML += `<td>${product.name}</td>`;
       cartHTML += `<td>${product.currency} ${product.cost.toFixed(2)}</td>`;
-      cartHTML += `<td><input class="form-control form-control-sm" type="number" value="${product.quantity}" id="cantidad-input-${index}" onchange="updateSubtotalProducto(${index}, ${product.cost})"></td>`;
+      cartHTML += `<td><input class="form-control form-control-sm" type="number" value="${product.quantity}" id="cantidad-input-${index}" onchange="updateSubtotalProducto(${index})"></td>`;
       cartHTML += `<td><button class="btn btn-danger" onclick="removeProduct(${index})">Eliminar</button></td>`;
-      cartHTML += `<td id="subtotal-${index}">${(product.cost * product.quantity).toFixed(2)}</td>`;
+
+      // Calcula el subtotal del producto
+      const subtotalProducto = product.cost * product.quantity;
+      cartHTML += `<td id="subtotal-${index}">${subtotalProducto.toFixed(2)}</td>`;
       cartHTML += '</tr>';
     }
 
@@ -74,10 +78,41 @@ function mostrarCarrito(cart) {
     cartHTML += '</div>';
 
     cartInfoContainer.innerHTML = cartHTML;
+    // Calcula el subtotalFinal y lo muestra
+    const subtotalFinal = calcularSubtotalFinal(cart); //Llama a la función calcularSubtotalFinal() y almacena lo que devuelve en subtotalFinal
+    document.getElementById("subtotalFinal").textContent = subtotalFinal.toFixed(2); //Lo muestra en el elemento con id subtotalFinal
   }
 }
 
-function removeProduct(index) {
+function calcularSubtotalFinal(cart) {
+  let subtotalFinal = 0; //Inicializa en 0
+  for (const product of cart) { //Recorre los productos del carrito
+    subtotalFinal += product.cost * product.quantity; //Suma sus subtotales
+  }
+  return subtotalFinal; //Devuelve la suma
+}
+
+function updateSubtotalProducto(index) { //Función que se ejecuta cuando cambia la cantidad de un producto
+  const quantityInput = document.getElementById(`cantidad-input-${index}`);
+
+  // Obtener el carrito del almacenamiento local
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  // Actualizar la cantidad en el carrito en localStorage
+  cart[index].quantity = parseInt(quantityInput.value);
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  // Recalcula el subtotalFinal (la suma de los subtotales de los productos)
+  const subtotalFinal = calcularSubtotalFinal(cart);
+  document.getElementById("subtotalFinal").textContent = subtotalFinal.toFixed(2);
+
+  // Actualiza el subtotal del producto (de cada producto individual)
+  const subtotalProducto = cart[index].cost * cart[index].quantity;
+  document.getElementById(`subtotal-${index}`).textContent = subtotalProducto.toFixed(2);
+}
+
+function removeProduct(index) { //Se ejecuta cuando se elimina un producto del carrito
+  
   // Obtener el carrito del almacenamiento local
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
@@ -90,20 +125,3 @@ function removeProduct(index) {
   // Volver a mostrar el carrito actualizado
   mostrarCarrito(cart);
 }
-
-function updateSubtotalProducto(index, costoProducto) {
-  const quantityInput = document.getElementById(`cantidad-input-${index}`);
-  const subtotalElement = document.getElementById(`subtotal-${index}`);
-
-  const newQuantity = parseInt(quantityInput.value);
-  const newSubtotal = (costoProducto * newQuantity).toFixed(2);
-
-  subtotalElement.textContent = newSubtotal;
-
-  // Actualizar la cantidad en el carrito en localStorage
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  cart[index].quantity = newQuantity;
-  localStorage.setItem("cart", JSON.stringify(cart));
-}
-
-
