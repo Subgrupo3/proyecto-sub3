@@ -67,9 +67,26 @@ function mostrarCarrito(cart) {
       cartHTML += `<td><input class="form-control form-control-sm" type="number" value="${product.quantity}" id="cantidad-input-${index}" onchange="updateSubtotalProducto(${index})"></td>`;
       cartHTML += `<td><button class="btn btn-danger" onclick="removeProduct(${index})">Eliminar</button></td>`;
 
-      // Calcula el subtotal del producto
-      const subtotalProducto = product.cost * product.quantity;
-      cartHTML += `<td id="subtotal-${index}">${subtotalProducto.toFixed(2)}</td>`;
+      if (product.currency === 'UYU') { //Si la moneda es UYU
+      // Calcula el subtotal en UYU
+      const subtotalProductoUYU = product.cost * product.quantity;
+
+      // Convierte el subtotal a USD 
+       const subtotalProductoUSD = subtotalProductoUYU / 40;
+
+       product.subtotalProductoUSD = subtotalProductoUSD;
+
+       //Lo agrego
+      cartHTML += `<td id="subtotal-${index}">USD ${subtotalProductoUSD.toFixed(2)}</td>`;
+
+      } else{ //Si la poneda es USD
+        // Calcula el subtotal del producto
+        const subtotalProducto = product.cost * product.quantity;
+        product.subtotalProducto = subtotalProducto;
+        cartHTML += `<td id="subtotal-${index}">USD ${subtotalProducto.toFixed(2)}</td>`;
+
+      }
+
       cartHTML += '</tr>';
     }
 
@@ -78,21 +95,29 @@ function mostrarCarrito(cart) {
     cartHTML += '</div>';
 
     cartInfoContainer.innerHTML = cartHTML;
+
+  
     // Calcula el subtotalFinal y lo muestra
     const subtotalFinal = calcularSubtotalFinal(cart); //Llama a la función calcularSubtotalFinal() y almacena lo que devuelve en subtotalFinal
-    document.getElementById("subtotalFinal").textContent = subtotalFinal.toFixed(2); //Lo muestra en el elemento con id subtotalFinal
-  }
+    document.getElementById("subtotalFinal").textContent = 'USD ' + subtotalFinal.toFixed(2); //Lo muestra en el elemento con id subtotalFinal
+
+}
 }
 
 function calcularSubtotalFinal(cart) {
-  let subtotalFinal = 0; //Inicializa en 0
-  for (const product of cart) { //Recorre los productos del carrito
-    subtotalFinal += product.cost * product.quantity; //Suma sus subtotales
+  let subtotalFinal = 0; // Inicializa en 0
+  for (const product of cart) { // Recorre los productos del carrito
+    if(product.currency === 'UYU'){
+      subtotalFinal += product.subtotalProductoUSD;
+    } else{
+      subtotalFinal += product.subtotalProducto; 
+    }
   }
-  return subtotalFinal; //Devuelve la suma
+  return subtotalFinal; 
 }
 
 function updateSubtotalProducto(index) { //Función que se ejecuta cuando cambia la cantidad de un producto
+  
   const quantityInput = document.getElementById(`cantidad-input-${index}`);
 
   // Obtener el carrito del almacenamiento local
@@ -102,17 +127,37 @@ function updateSubtotalProducto(index) { //Función que se ejecuta cuando cambia
   cart[index].quantity = parseInt(quantityInput.value);
   localStorage.setItem("cart", JSON.stringify(cart));
 
-  // Recalcula el subtotalFinal (la suma de los subtotales de los productos)
-  const subtotalFinal = calcularSubtotalFinal(cart);
-  document.getElementById("subtotalFinal").textContent = subtotalFinal.toFixed(2);
+  // Accede al objeto product dentro del carrito
+  const product = cart[index];
 
-  // Actualiza el subtotal del producto (de cada producto individual)
-  const subtotalProducto = cart[index].cost * cart[index].quantity;
-  document.getElementById(`subtotal-${index}`).textContent = subtotalProducto.toFixed(2);
+
+  if (product.currency === 'UYU') { //Si la moneda es UYU
+
+      // Calcula el subtotal en UYU
+      const subtotalProductoUYU = product.cost * product.quantity;
+  
+      // Convierte el subtotal a USD 
+      const subtotalProductoUSD = subtotalProductoUYU / 40;
+      document.getElementById(`subtotal-${index}`).textContent = 'USD ' + subtotalProductoUSD.toFixed(2);
+  
+      // Actualiza el subtotal en el producto
+      product.subtotalProductoUSD = subtotalProductoUSD;
+    } else { // Si la moneda es USD
+      // Actualiza el subtotal del producto (de cada producto individual)
+      const subtotalProducto = product.cost * product.quantity;
+      document.getElementById(`subtotal-${index}`).textContent = 'USD ' + subtotalProducto.toFixed(2);
+  
+      // Actualiza el subtotal en el producto
+      product.subtotalProducto = subtotalProducto;
+    }
+  
+    // Recalcula el subtotalFinal (la suma de los subtotales de los productos)
+    const subtotalFinal = calcularSubtotalFinal(cart);
+    document.getElementById("subtotalFinal").textContent = 'USD ' + subtotalFinal.toFixed(2);
 }
 
 function removeProduct(index) { //Se ejecuta cuando se elimina un producto del carrito
-  
+
   // Obtener el carrito del almacenamiento local
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
 

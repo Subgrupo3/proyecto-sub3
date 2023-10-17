@@ -110,8 +110,6 @@ document.addEventListener("DOMContentLoaded", function () {
   </div>
 </div>
 <hr>
-
-
           `;
       })
       .catch(function (error) {
