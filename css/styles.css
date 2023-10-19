@@ -387,3 +387,10 @@ ul {
 #descripcionCarrito{
   text-align: left;
 }
+#hr {
+  color: black;
+  height: 4px !important;
+  border: none !important;
+  background-color: black !important;
+  margin: 20px 0 !important;
+}
