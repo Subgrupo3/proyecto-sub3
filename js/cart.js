@@ -170,3 +170,25 @@ function removeProduct(index) { //Se ejecuta cuando se elimina un producto del c
   // Volver a mostrar el carrito actualizado
   mostrarCarrito(cart);
 }
+
+
+function validateForm() {
+  const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked');
+  const cardNumber = document.getElementById('cardNumber');
+  const securityCode = document.getElementById('securityCode');
+  const expirationDate = document.getElementById('expirationDate');
+  const accountNumber = document.getElementById('accountNumber');
+
+  if (!paymentMethod) {
+    alert('Debes seleccionar un método de pago.');
+  } else if (paymentMethod.value === 'credit_card') {
+    if (!cardNumber.value || !securityCode.value || !expirationDate.value) {
+      alert('Debes completar los campos de la tarjeta de crédito.');
+    }
+  } else if (paymentMethod.value === 'bank' && !accountNumber.value) {
+    alert('Debes completar el campo de número de cuenta.');
+  } else {
+    alert('Formulario válido. Puedes enviar los datos al servidor.');
+  }
+}
+
