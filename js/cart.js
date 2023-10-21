@@ -1,3 +1,5 @@
+let subtotalFinal = 0;
+
 document.addEventListener("DOMContentLoaded", function () {
 
   // Obtener el carrito del almacenamiento local
@@ -34,9 +36,12 @@ document.addEventListener("DOMContentLoaded", function () {
   } else {
     mostrarCarrito(cart);
   }
+
+
 });
 
 function mostrarCarrito(cart) {
+  console.log(cart);
   let cartInfoContainer = document.getElementById("carrito-info");
 
   if (cart.length === 0) {
@@ -64,7 +69,7 @@ function mostrarCarrito(cart) {
       cartHTML += `<td><img src="${product.image}" alt="${product.name}" width="100" class="product-image" onclick='localStorage.setItem("prodID", ${product.id}), window.location = "product-info.html"'></td>`;
       cartHTML += `<td>${product.name}</td>`;
       cartHTML += `<td>${product.currency} ${product.cost.toFixed(2)}</td>`;
-      cartHTML += `<td><input class="form-control form-control-sm" type="number" value="${product.quantity}" id="cantidad-input-${index}" onchange="updateSubtotalProducto(${index})"></td>`;
+      cartHTML += `<td><input class="form-control form-control-sm" type="number" value="${product.quantity}" id="cantidad-input-${index}" onchange="updateSubtotalProducto(${index}, document.querySelector('input[name=envio]:checked'))"> </td>`; //Se fija en que radiobutton esta seleccionado
       cartHTML += `<td><button class="btn btn-danger" onclick="removeProduct(${index})">Eliminar</button></td>`;
 
       if (product.currency === 'UYU') { //Si la moneda es UYU
@@ -98,26 +103,28 @@ function mostrarCarrito(cart) {
 
   
     // Calcula el subtotalFinal y lo muestra
-    const subtotalFinal = calcularSubtotalFinal(cart); //Llama a la función calcularSubtotalFinal() y almacena lo que devuelve en subtotalFinal
-    document.getElementById("subtotalFinal").textContent = 'USD ' + subtotalFinal.toFixed(2); //Lo muestra en el elemento con id subtotalFinal
+    subtotalFinal = calcularSubtotalFinal(cart);
+    document.getElementById("subtotalFinal").textContent = 'USD ' + subtotalFinal.toFixed(2);
 
 }
 }
 
 function calcularSubtotalFinal(cart) {
-  let subtotalFinal = 0; // Inicializa en 0
+  subtotalFinal = 0; // Inicializa en 0
+  console.log(cart)
   for (const product of cart) { // Recorre los productos del carrito
     if(product.currency === 'UYU'){
       subtotalFinal += product.subtotalProductoUSD;
+      console.log(subtotalFinal);
     } else{
       subtotalFinal += product.subtotalProducto; 
     }
   }
+  console.log(subtotalFinal);
   return subtotalFinal; 
 }
 
-function updateSubtotalProducto(index) { //Función que se ejecuta cuando cambia la cantidad de un producto
-  
+function updateSubtotalProducto(index, selectedRadioButton) {//Recibe el index del producto y el rabiobutton seleccionado
   const quantityInput = document.getElementById(`cantidad-input-${index}`);
 
   // Obtener el carrito del almacenamiento local
@@ -127,33 +134,12 @@ function updateSubtotalProducto(index) { //Función que se ejecuta cuando cambia
   cart[index].quantity = parseInt(quantityInput.value);
   localStorage.setItem("cart", JSON.stringify(cart));
 
-  // Accede al objeto product dentro del carrito
-  const product = cart[index];
+  // Llamar a mostrarCarrito para actualizar la vista
+  mostrarCarrito(cart);
 
+   // Llamar a calcularEnvio para actualizar el precio del envio
+   calcularEnvio(selectedRadioButton);
 
-  if (product.currency === 'UYU') { //Si la moneda es UYU
-
-      // Calcula el subtotal en UYU
-      const subtotalProductoUYU = product.cost * product.quantity;
-  
-      // Convierte el subtotal a USD 
-      const subtotalProductoUSD = subtotalProductoUYU / 40;
-      document.getElementById(`subtotal-${index}`).textContent = 'USD ' + subtotalProductoUSD.toFixed(2);
-  
-      // Actualiza el subtotal en el producto
-      product.subtotalProductoUSD = subtotalProductoUSD;
-    } else { // Si la moneda es USD
-      // Actualiza el subtotal del producto (de cada producto individual)
-      const subtotalProducto = product.cost * product.quantity;
-      document.getElementById(`subtotal-${index}`).textContent = 'USD ' + subtotalProducto.toFixed(2);
-  
-      // Actualiza el subtotal en el producto
-      product.subtotalProducto = subtotalProducto;
-    }
-  
-    // Recalcula el subtotalFinal (la suma de los subtotales de los productos)
-    const subtotalFinal = calcularSubtotalFinal(cart);
-    document.getElementById("subtotalFinal").textContent = 'USD ' + subtotalFinal.toFixed(2);
 }
 
 function removeProduct(index) { //Se ejecuta cuando se elimina un producto del carrito
@@ -169,6 +155,42 @@ function removeProduct(index) { //Se ejecuta cuando se elimina un producto del c
 
   // Volver a mostrar el carrito actualizado
   mostrarCarrito(cart);
+}
+
+function calcularEnvio(radioButton){
+
+  //Obtengo el elemento con id precioEnvio
+  let precioEnvio = document.getElementById("precioEnvio");
+  let envioFinal = 0; //Inicializo en 0
+
+  //Si premium esta seleccionado
+  if (radioButton.value === "premium") {
+    console.log('Radio button Premium seleccionado'); //Verificacion interna
+    envioFinal = (subtotalFinal * 0.15).toFixed(2); //Calculo el precio del envio
+    precioEnvio.textContent = 'USD ' + envioFinal; //Cambio el contenido al subtotal más el porcentaje, con 2 cifras luego de la coma
+    calcularTotal(envioFinal); //Llamo a la función que calcula el total
+  } //Si express esta seleccionado
+  else if (radioButton.value === "express") {
+    console.log('Radio button Express seleccionado');//Verificacion interna
+    envioFinal = (subtotalFinal * 0.07).toFixed(2);//Calculo el precio del envio
+    precioEnvio.textContent = 'USD ' + envioFinal; //Cambio el contenido al subtotal más el porcentaje, con 2 cifras luego de la coma
+    calcularTotal(envioFinal); //Llamo a la función que calcula el total
+  } //Si standard esta seleccionado
+  else if (radioButton.value === "standard") {
+    console.log('Radio button Standard seleccionado');//Verificacion interna
+    envioFinal = (subtotalFinal * 0.05).toFixed(2);//Calculo el precio del envio
+    precioEnvio.textContent = 'USD ' + envioFinal ; //Cambio el contenido al subtotal más el porcentaje, con 2 cifras luego de la coma
+    calcularTotal(envioFinal); //Llamo a la función que calcula el total
+  }
+
+}
+
+function calcularTotal(envioFinal){ //Recibe el precio del envio
+
+  let total = document.getElementById("total"); //Obtengo el elemento html donde se muestra el total
+  let precioTotal = parseFloat(subtotalFinal) + parseFloat(envioFinal); //Sumo el subtotal final con el precio del envio
+  total.textContent = 'USD ' + precioTotal; //Actualizo el contenido del total
+
 }
 
 
