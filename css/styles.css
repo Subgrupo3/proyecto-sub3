@@ -394,3 +394,8 @@ ul {
   background-color: black !important;
   margin: 20px 0 !important;
 }
+
+/*Total del carrito en negrita*/
+#total{
+  font-weight: bold;
+}
