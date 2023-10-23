@@ -217,3 +217,51 @@ function validateForm() {
   }
 }
 
+
+
+function habilitarCampos(metodoPago) {
+  // Obtener los campos de entrada relevantes
+  const camposTarjeta = document.querySelectorAll('.campos-tarjeta');
+  const camposTransferencia = document.querySelectorAll('.campos-transferencia');
+
+  if (metodoPago === 'credit_card') {
+    // Deshabilitar campos de transferencia y agregar el fondo gris
+    camposTransferencia.forEach(campo => {
+      campo.disabled = true;
+      campo.style.backgroundColor = '#ccc'; // Fondo gris
+    });
+
+    // Habilitar campos de tarjeta de crédito
+    camposTarjeta.forEach(campo => {
+      campo.disabled = false;
+      campo.style.backgroundColor = ''; // Restablecer el fondo
+    })
+  } else if (metodoPago === 'bank') {
+    // Deshabilitar campos de tarjeta de crédito y agregar el fondo gris
+    camposTarjeta.forEach(campo => {
+      campo.disabled = true;
+      campo.style.backgroundColor = '#ccc'; // Fondo gris
+    });
+
+    // Habilitar campos de transferencia bancaria
+    camposTransferencia.forEach(campo => {
+      campo.disabled = false;
+      campo.style.backgroundColor = ''; // Restablecer el fondo
+    });
+  }
+}
+
+
+function habilitarCampos(metodoPago) {
+  // Obtén el elemento <span> donde mostrarás el método de pago seleccionado
+  const metodoPagoSeleccionado = document.getElementById("metodoPagoSeleccionado");
+
+  if (metodoPago === 'credit_card') {
+    metodoPagoSeleccionado.textContent = 'Tarjeta de crédito';
+  } else if (metodoPago === 'bank') {
+    metodoPagoSeleccionado.textContent = 'Transferencia bancaria';
+  } else {
+    // Si no se selecciona ninguna opción, muestra "No se ha seleccionado"
+    metodoPagoSeleccionado.textContent = 'No se ha seleccionado';
+  }
+}

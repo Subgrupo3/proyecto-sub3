@@ -124,7 +124,7 @@
         <div>
           <h3 class="text-start">Forma de pago</h3>
           <div class="d-flex card text-dark text-start">
-            <p class="mx-2">No ha seleccionado 
+            <p class="mx-2" >Pagar con: <span id="metodoPagoSeleccionado">No ha seleccionado </span>
               <button type="button" class="btn btn-link mx-2" data-bs-toggle="modal" data-bs-target="#modalPagos" style="width: 15%;">Seleccionar</button>
             </p>
            
@@ -142,9 +142,8 @@
               </div>
               <div class="modal-body">
                 <form id="paymentForm">
-                  <div class="form-check d-flex justify-content-start text-start">
-                    <hr>
-                    <input type="radio" name="paymentMethod" id="credit_card" value="credit_card">
+                  <div class="form-check d-flex justify-content-start text-start mt-3 mx-2">
+                    <input type="radio" name="paymentMethod" id="credit_card" value="credit_card" onclick="habilitarCampos('credit_card')">
                     <label class="form-check-label" for="credit_card">Tarjeta de crédito</label>
                   </div>
                   <hr>
@@ -153,26 +152,26 @@
                       <p>
                         <label for="cardNumber">Numero de Tarjeta</label>
                       </p>
-                      <input type="text" class="form-control" id="cardNumber">
+                      <input type="text" class="form-control campos-tarjeta" id="cardNumber">
                     </div>
                     <div class="mt-3 justify-content-start text-start col-md-4 mx-3">
                       <p>
                         <label for="securityCode">Codigo de seg</label>
                       </p>
-                      <input type="text" class="form-control" id="securityCode">
+                      <input type="text" class="form-control campos-tarjeta" id="securityCode">
                     </div>
                   </div>
                   <div class="mt-3 justify-content-start text-start col-md-4 mx-3">
                     <p>
                       <label for="expirationDate">Vencimiento (MM/AA)</label>
                     </p>
-                    <input type="text" class="form-control" id="expirationDate">
+                    <input type="text" class="form-control campos-tarjeta" id="expirationDate">
                   </div>
                   <strong>
                     <hr id="hr" >
                   </strong>
                   <div class="form-check d-flex justify-content-start text-start mt-3 mx-2">
-                    <input type="radio" name="paymentMethod" id="bank" value="bank">
+                    <input type="radio" name="paymentMethod" id="bank" value="bank" onclick="habilitarCampos('bank')">
                     <label class="form-check-label" for="bank">Transferencia bancaria</label>
                   </div>
                   <hr>
@@ -180,7 +179,7 @@
                     <p>
                       <label for="accountNumber">Numero de Cuenta</label>
                     </p>
-                    <input type="text" class="form-control" id="accountNumber">
+                    <input type="text" class="form-control campos-transferencia" id="accountNumber">
                   </div>
                 </form>
               </div>
