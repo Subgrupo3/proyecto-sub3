@@ -223,12 +223,14 @@ function habilitarCampos(metodoPago) {
   // Obtener los campos de entrada relevantes
   const camposTarjeta = document.querySelectorAll('.campos-tarjeta');
   const camposTransferencia = document.querySelectorAll('.campos-transferencia');
+  const metodoPagoSeleccionado = document.getElementById("metodoPagoSeleccionado");
 
   if (metodoPago === 'credit_card') {
     // Deshabilitar campos de transferencia y agregar el fondo gris
     camposTransferencia.forEach(campo => {
       campo.disabled = true;
       campo.style.backgroundColor = '#ccc'; // Fondo gris
+      campo.value = ''; // Borra el contenido del campo
     });
 
     // Habilitar campos de tarjeta de crédito
@@ -241,6 +243,7 @@ function habilitarCampos(metodoPago) {
     camposTarjeta.forEach(campo => {
       campo.disabled = true;
       campo.style.backgroundColor = '#ccc'; // Fondo gris
+      campo.value = ''; // Borra el contenido del campo
     });
 
     // Habilitar campos de transferencia bancaria
@@ -249,12 +252,6 @@ function habilitarCampos(metodoPago) {
       campo.style.backgroundColor = ''; // Restablecer el fondo
     });
   }
-}
-
-
-function habilitarCampos(metodoPago) {
-  // Obtén el elemento <span> donde mostrarás el método de pago seleccionado
-  const metodoPagoSeleccionado = document.getElementById("metodoPagoSeleccionado");
 
   if (metodoPago === 'credit_card') {
     metodoPagoSeleccionado.textContent = 'Tarjeta de crédito';
@@ -265,3 +262,4 @@ function habilitarCampos(metodoPago) {
     metodoPagoSeleccionado.textContent = 'No se ha seleccionado';
   }
 }
+
