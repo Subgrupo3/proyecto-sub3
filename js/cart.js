@@ -70,7 +70,7 @@ function mostrarCarrito(cart) {
       cartHTML += `<td>${product.name}</td>`;
       cartHTML += `<td>${product.currency} ${product.cost.toFixed(2)}</td>`;
       cartHTML += `<td><input class="form-control form-control-sm" type="number" value="${product.quantity}" id="cantidad-input-${index}" onchange="updateSubtotalProducto(${index}, document.querySelector('input[name=envio]:checked'))"> </td>`; //Se fija en que radiobutton esta seleccionado
-      cartHTML += `<td><button class="btn btn-danger" onclick="removeProduct(${index})">Eliminar</button></td>`;
+      cartHTML += `<td><button class="btn btn-danger" onclick="removeProduct(${index}, document.querySelector('input[name=envio]:checked'))">Eliminar</button></td>`;
 
       if (product.currency === 'UYU') { //Si la moneda es UYU
       // Calcula el subtotal en UYU
@@ -142,7 +142,7 @@ function updateSubtotalProducto(index, selectedRadioButton) {//Recibe el index d
 
 }
 
-function removeProduct(index) { //Se ejecuta cuando se elimina un producto del carrito
+function removeProduct(index, selectedRadioButton){ //Se ejecuta cuando se elimina un producto del carrito
 
   // Obtener el carrito del almacenamiento local
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -155,6 +155,9 @@ function removeProduct(index) { //Se ejecuta cuando se elimina un producto del c
 
   // Volver a mostrar el carrito actualizado
   mostrarCarrito(cart);
+
+  // Llamar a calcularEnvio para actualizar el precio del envio
+  calcularEnvio(selectedRadioButton);
 }
 
 function calcularEnvio(radioButton){
