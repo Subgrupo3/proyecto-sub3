@@ -220,8 +220,28 @@ document.addEventListener("DOMContentLoaded", function () {
   var relatedProductsCarousel = new bootstrap.Carousel(document.getElementById("related-products-carousel"));
 });
 
-let agregarProducto = document.getElementById("agregarProducto");
+// ...
 
+function agregarProductoAlCarrito(productToAdd) {
+  // Obtener el carrito actual desde localStorage o crear uno nuevo
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  // Verificar si el producto ya existe en el carrito
+  const existingProductIndex = cart.findIndex((product) => product.id === productToAdd.id);
+
+  if (existingProductIndex !== -1) {
+    // Si el producto ya existe, aumentar la cantidad
+    cart[existingProductIndex].quantity += productToAdd.quantity;
+  } else {
+    // Si el producto no existe en el carrito, agregarlo
+    cart.push(productToAdd);
+  }
+
+  // Guardar el carrito actualizado en localStorage
+  localStorage.setItem("cart", JSON.stringify(cart));
+}
+
+let agregarProducto = document.getElementById("agregarProducto");
 
 agregarProducto.addEventListener("click", function () {
   if (productId) {
@@ -230,42 +250,38 @@ agregarProducto.addEventListener("click", function () {
 
     // Realizamos la solicitud GET para obtener la información del producto mediante un fetch
     fetch(productURL)
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (productData) {
-      const productName = productData.name;
-      const productCost = productData.cost;
-      const productCurrency = productData.currency;
-      const productImages = productData.images[0];
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (productData) {
+        const productName = productData.name;
+        const productCost = productData.cost;
+        const productCurrency = productData.currency;
+        const productImages = productData.images[0];
 
-      // Crear un objeto que represente el producto a agregar al carrito
-      const productToAdd = {
-        id: productId,
-        name: productName,
-        cost: productCost,
-        currency: productCurrency,
-        image: productImages,
-        quantity: 1
-      };
+        // Crear un objeto que represente el producto a agregar al carrito
+        const productToAdd = {
+          id: productId,
+          name: productName,
+          cost: productCost,
+          currency: productCurrency,
+          image: productImages,
+          quantity: 1
+        };
 
-      // Obtener el carrito actual desde localStorage o crear uno nuevo
-      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        // Agregar el producto al carrito (usando la función que verifica duplicados)
+        agregarProductoAlCarrito(productToAdd);
 
-      // Agregar el producto al carrito
-      cart.push(productToAdd);
-
-      // Guardar el carrito actualizado en localStorage
-      localStorage.setItem("cart", JSON.stringify(cart));
-
-      // Redirigir al usuario a la página del carrito
-      window.location = "cart.html";
-    })
-    .catch(function (error) {
-      console.error("Error al obtener la información del producto:", error);
-    });
-}
+        // Redirigir al usuario a la página del carrito
+        window.location = "cart.html";
+      })
+      .catch(function (error) {
+        console.error("Error al obtener la información del producto:", error);
+      });
+  }
 });
+// ...
+
 
 
 
