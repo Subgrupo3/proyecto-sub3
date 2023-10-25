@@ -301,6 +301,9 @@ function validarCamposTarjeta(){
 
   const metodo = document.getElementById("metodoNoSeleccionado");
 
+  const inputaccountNumber = document.getElementById ("accountNumber");
+  inputaccountNumber.classList.remove("is-invalid");
+
   const inputcardNumber = document.getElementById("cardNumber");
   if(inputcardNumber.value === ""){
     console.log("invalido numtarjeta");
@@ -335,6 +338,14 @@ function validarCamposTransferencia(){
   
   const metodo = document.getElementById("metodoNoSeleccionado");
   const inputaccountNumber = document.getElementById ("accountNumber");
+
+  const inputcardNumber = document.getElementById("cardNumber");
+  inputcardNumber.classList.remove("is-invalid");
+  const inputSecurityCode = document.getElementById("securityCode");
+  inputSecurityCode.classList.remove("is-invalid")
+  const inputexpirationDate = document.getElementById("expirationDate");
+  inputexpirationDate.classList.remove("is-invalid"); 
+
 
   if(inputaccountNumber.value === ""){
     inputaccountNumber.classList.add("is-invalid");
@@ -382,11 +393,19 @@ confirmarCompra.addEventListener("click", function(){
   validarPago();
   validarTipoEnvio();
   validarCantidad();
+  
   if(credito.checked){
     validarCamposTarjeta();
   } else if(transferencia.checked){
     validarCamposTransferencia();
   }
+
+  credito.addEventListener("click", function(){
+    validarCamposTarjeta();
+  })
+  transferencia.addEventListener("click", function(){
+    validarCamposTransferencia();
+  })
 
   // Verificar si todas las validaciones han pasado
   const errorFields = document.querySelectorAll('.is-invalid');
