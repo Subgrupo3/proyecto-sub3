@@ -215,6 +215,8 @@ function habilitarCampos(metodoPago) {
       campo.disabled = false;
       campo.style.backgroundColor = ''; // Restablecer el fondo
     })
+
+    metodoPagoSeleccionado.innerHTML = "Tarjeta de Crédito";
   } else if (metodoPago === 'bank') {
     // Deshabilitar campos de tarjeta de crédito y agregar el fondo gris
     camposTarjeta.forEach(campo => {
@@ -228,15 +230,8 @@ function habilitarCampos(metodoPago) {
       campo.disabled = false;
       campo.style.backgroundColor = ''; // Restablecer el fondo
     });
-  }
-
-  if (metodoPago === 'credit_card') {
-    metodoPagoSeleccionado.textContent = 'Tarjeta de crédito';
-  } else if (metodoPago === 'bank') {
-    metodoPagoSeleccionado.textContent = 'Transferencia bancaria';
-  } else {
-    // Si no se selecciona ninguna opción, muestra "No se ha seleccionado"
-    metodoPagoSeleccionado.textContent = 'No se ha seleccionado';
+    
+    metodoPagoSeleccionado.innerHTML = "Transferencia bancaria";
   }
 }
 
@@ -263,33 +258,106 @@ if(inputEsquina.value ===""){
   inputEsquina.classList.remove("is-invalid");
   }
 
+  inputCalle.addEventListener("input",function(){
+    if(inputCalle.value === ""){
+      inputCalle.classList.add("is-invalid");
+  } else{
+    inputCalle.classList.remove("is-invalid");
+  }
+})
+
+  inputNumero.addEventListener("input", function(){
+    if(inputNumero.value === ""){
+      inputNumero.classList.add("is-invalid");
+    } else{
+    inputNumero.classList.remove("is-invalid");
+    }
+  })
+
+  inputEsquina.addEventListener("input", function(){
+    if(inputEsquina.value ===""){
+      inputEsquina.classList.add("is-invalid");
+      } else {
+      inputEsquina.classList.remove("is-invalid");
+      }
+  })
+
+}
+
+function validarTipoEnvio(){
   const envioPremium = document.getElementById("envioPremium");
   const envioExpress = document.getElementById("envioExpress");
   const envioStandard = document.getElementById("envioStandard");
   
-  const botonEnvio = document.getElementById("botonEnvio");
+  const tipoEnvios = document.getElementById("tipoEnvios");
 
   if((!(envioPremium.checked)) && (!(envioExpress.checked)) && (!(envioStandard.checked))){
-    botonEnvio.classList.add("is-invalid");
+    tipoEnvios.classList.add("is-invalid");
     console.log("probando");
   } else{
-    botonEnvio.classList.remove("is-invalid");
+    tipoEnvios.classList.remove("is-invalid");
+  }
+}
+
+
+function validarCamposTarjeta(){
+
+  const metodo = document.getElementById("metodoNoSeleccionado");
+
+  const inputcardNumber = document.getElementById("cardNumber");
+  if(inputcardNumber.value === ""){
+    console.log("invalido numtarjeta");
+    inputcardNumber.classList.add("is-invalid");
+    metodo.classList.add("text-danger");
+  } else {
+    inputcardNumber.classList.remove("is-invalid");
+    metodo.classList.remove("text-danger");
   }
 
+const inputSecurityCode = document.getElementById("securityCode");
+if(inputSecurityCode.value === ""){
+  inputSecurityCode.classList.add("is-invalid");
+  metodo.classList.add("text-danger");
+} else{
+  inputSecurityCode.classList.remove("is-invalid");
+  metodo.classList.remove("text-danger");
+}
+
+const inputexpirationDate = document.getElementById("expirationDate");
+if(inputexpirationDate.value === "") {
+  inputexpirationDate.classList.add("is-invalid");
+  metodo.classList.add("text-danger");
+} else {
+  inputexpirationDate.classList.remove("is-invalid"); 
+  metodo.classList.remove("text-danger");
+}
+}
+
+
+function validarCamposTransferencia(){
+  
+  const metodo = document.getElementById("metodoNoSeleccionado");
+  const inputaccountNumber = document.getElementById ("accountNumber");
+
+  if(inputaccountNumber.value === ""){
+    inputaccountNumber.classList.add("is-invalid");
+    metodo.classList.add("text-danger");
+  } else {
+    inputaccountNumber.classList.remove("is-invalid");
+    metodo.classList.remove("text-danger");
+  }
 }
 
 /*
-function validarCampos(){
-  const inputnumTarjeta = document.getElementById ("numTarjeta");
-  if(inputnumTarjeta.value === ""){
-    inputnumTarjeta.classList.add("is-invalid");
-  } else {
-    inputnumTarjeta.classList.remove("is-invalud");
-  }
+if((inputcardNumber.value ==="") && (inputSecurityCode.value === "") && (inputexpirationDate.value==="") && (inputaccountNumber.value ==="")){
+  botonEnvio.classList.add("is-invalid");
+  metodo.classList.add("text-danger");
+} else{
+  botonEnvio.classList.remove("is-invalid");
+  metodo.classList.remove("text-danger");
+}*/
 
-const inputcodigoSeg = document.getElementById ("codigoSeg");
-if(inputcodigoSeg.value ===  
-}
+
 
 function validarPago(){
   const credito = document.getElementById("credit_card");
@@ -306,13 +374,34 @@ function validarPago(){
   }
 
 }
-*/
+
+function validarCantidad(){
+  let cart = JSON.parse(localStorage.getItem("cart"));
+  for (const product of cart) { // Recorre los productos del carrito
+    if(product.quantity <= 0){
+      alert("La cantidad del producto " + product.name + " debe ser mayor a 0");
+    }
+  }
+
+}
 
 const confirmarCompra = document.getElementById("confirmarCompra");
 
 confirmarCompra.addEventListener("click", function(){
+
+  const credito = document.getElementById("credit_card");
+  const transferencia = document.getElementById("bank");
+
   validarEnvio();
   validarPago();
+  validarTipoEnvio();
+  validarCantidad();
+  if(credito.checked){
+    validarCamposTarjeta();
+  } else if(transferencia.checked){
+    validarCamposTransferencia();
+  }
+
 })
 
 

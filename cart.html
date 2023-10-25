@@ -62,15 +62,15 @@
           <div>
           <h3>Tipo de envio</h3>
           <label>
-            <input id="envioPremium" class="mx-2" type="radio" name="envio" value="premium" onclick="calcularEnvio(this), validarEnvio()">Premium 2 a 5 días (15%)
+            <input id="envioPremium" class="mx-2" type="radio" name="envio" value="premium" onclick="calcularEnvio(this), validarTipoEnvio()">Premium 2 a 5 días (15%)
           </label><br>
           <label>
-            <input id="envioExpress" class="mx-2" type="radio" name="envio" value="express"  onclick="calcularEnvio(this), validarEnvio()">Express 5 a 8 días (7%)
+            <input id="envioExpress" class="mx-2" type="radio" name="envio" value="express"  onclick="calcularEnvio(this), validarTipoEnvio()">Express 5 a 8 días (7%)
           </label><br>
           <label>
-            <input id="envioStandard" class="mx-2" type="radio" name="envio" value="standard"  onclick="calcularEnvio(this), validarEnvio()">Standard 12 a 15 dias (5%)
+            <input id="envioStandard" class="mx-2" type="radio" name="envio" value="standard"  onclick="calcularEnvio(this), validarTipoEnvio()">Standard 12 a 15 dias (5%)
           </label><br>
-          <p id="botonEnvio"></p>
+          <p id="tipoEnvios"></p>
           <div class="invalid-feedback"> 
             Debe seleccionar un tipo de envio.
           </div>
@@ -83,7 +83,7 @@
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="calle" class="form-label">Calle</label>
-                    <input type="text" class="form-control" id="calle" oninput="validarEnvio()">
+                    <input type="text" class="form-control" id="calle">
                     <div class="invalid-feedback">
                       Debe ingresar una calle.
                     </div>
@@ -92,7 +92,7 @@
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="numero" class="form-label">Número</label>
-                    <input type="text" class="form-control" id="numero" oninput="validarEnvio()">
+                    <input type="text" class="form-control" id="numero">
                     <div class="invalid-feedback">
                       Debe ingresar su número de puerta.
                     </div>
@@ -104,7 +104,7 @@
             <div class="col-md-12">
                 <div class="mb-3">
                     <label for="esquina" class="form-label">Esquina</label>
-                    <input type="text" class="form-control" id="esquina" oninput="validarEnvio()">
+                    <input type="text" class="form-control" id="esquina">
                     <div class="invalid-feedback"> 
                       Debe ingresar su esquina.
                     </div>
@@ -168,59 +168,62 @@
               <div class="modal-body">
                 <form id="paymentForm">
                   <div class="form-check d-flex justify-content-start text-start mt-3 mx-2">
-                    <input type="radio" name="paymentMethod" id="credit_card" value="credit_card" onclick="habilitarCampos('credit_card')" onchange="validarPago()">
+                    <input type="radio" name="paymentMethod" id="credit_card" value="credit_card" onclick="habilitarCampos('credit_card'), validarPago()">
                     <label class="form-check-label" for="credit_card">Tarjeta de crédito</label>
                   </div>
                   <hr>
                   <div class="d-flex">
-                    <div id="numTarjeta" class="mt-3 justify-content-start text-start col-md-4 mx-3">
+                    <div class="mt-3 justify-content-start text-start col-md-5 mb-xl-3">
                       <p>
                         <label for="cardNumber">Número de Tarjeta</label>
-                        <div class="invalid-feedback"> 
-                          Debe ingresar su Número. 
-                        </div>
                       </p>
+                      <div>
                       <input type="text" class="form-control campos-tarjeta" id="cardNumber">
+                      <div class="invalid-feedback"> 
+                        Debe ingresar su Número. 
+                      </div>
                     </div>
-                    <div id="codigoSeg" class="mt-3 justify-content-start text-start col-md-4 mx-3">
-                      <p>
+                    </div>
+                    <div class="mt-3 justify-content-start text-start col-md-5 mx-3">
+                      <p class="">
                         <label for="securityCode">Código de seguridad</label>
-                        <div class="invalid-feedback"> 
-                          Debe ingresar su código. 
-                        </div>
                       </p>
                       <input type="text" class="form-control campos-tarjeta" id="securityCode">
+                      <div class="invalid-feedback"> 
+                        Debe ingresar su código. 
+                      </div>
                     </div>
                   </div>
-                  <div  id="vencimiento" class="mt-3 justify-content-start text-start col-md-4 mx-3">
+                  <div  class="mt-3 justify-content-start text-start col-md-5 mx-3">
                     <p>
                       <label for="expirationDate">Vencimiento (MM/AA)</label>
-                      <div class="invalid-feedback"> 
-                        Debe ingresar su vencimiento. 
-                      </div>
                     </p>
                     <input type="text" class="form-control campos-tarjeta" id="expirationDate">
+                    <div class="invalid-feedback"> 
+                      Debe ingresar su vencimiento 
                   </div>
                   <strong>
                     <hr id="hr" >
                   </strong>
                   <div class="form-check d-flex justify-content-start text-start mt-3 mx-2">
-                    <input type="radio" name="paymentMethod" id="bank" value="bank" onclick="habilitarCampos('bank'), validarPago()">
+                    <input type="radio" name="paymentMethod" id="bank" value="bank" onclick="validarPago(), habilitarCampos('bank')">
                     <label class="form-check-label" for="bank">Transferencia bancaria</label>
                   </div>
                   <hr>
-                  <div id="numCuenta" class="mt-3 justify-content-start text-start col-md-4 mx-3">
+                  
+                  <div class="mt-3 justify-content-start text-start col-md-8 mx-3">
                     <p>
-                      <label for="accountNumber">Numero de Cuenta</label>
-                      <div class="invalid-feedback"> 
-                        Debe ingresar su número de cuenta.
+                      <label for="accountNumber">Número de Cuenta</label>
                     </p>
                     <input type="text" class="form-control campos-transferencia" id="accountNumber">
-                  </div>
+                    <div class="invalid-feedback" style="width: 100%"> Debe ingresar su número de cuenta.</div>
                 </form>
+
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close" style="width: 100%;">Cerrar</button>
+             
               </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close" style="width: 15%;">Cerrar</button>
+
+                
               </div>
             </div>
           </div>
