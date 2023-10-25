@@ -41,7 +41,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function mostrarCarrito(cart) {
-  console.log(cart);
   let cartInfoContainer = document.getElementById("carrito-info");
 
   if (cart.length === 0) {
@@ -111,7 +110,6 @@ function mostrarCarrito(cart) {
 
 function calcularSubtotalFinal(cart) {
   subtotalFinal = 0; // Inicializa en 0
-  console.log(cart)
   for (const product of cart) { // Recorre los productos del carrito
     if(product.currency === 'UYU'){
       subtotalFinal += product.subtotalProductoUSD;
@@ -120,7 +118,6 @@ function calcularSubtotalFinal(cart) {
       subtotalFinal += product.subtotalProducto; 
     }
   }
-  console.log(subtotalFinal);
   return subtotalFinal; 
 }
 
@@ -348,17 +345,6 @@ function validarCamposTransferencia(){
   }
 }
 
-/*
-if((inputcardNumber.value ==="") && (inputSecurityCode.value === "") && (inputexpirationDate.value==="") && (inputaccountNumber.value ==="")){
-  botonEnvio.classList.add("is-invalid");
-  metodo.classList.add("text-danger");
-} else{
-  botonEnvio.classList.remove("is-invalid");
-  metodo.classList.remove("text-danger");
-}*/
-
-
-
 function validarPago(){
   const credito = document.getElementById("credit_card");
   const transferencia = document.getElementById("bank");
@@ -402,7 +388,16 @@ confirmarCompra.addEventListener("click", function(){
     validarCamposTransferencia();
   }
 
-})
+  // Verificar si todas las validaciones han pasado
+  const errorFields = document.querySelectorAll('.is-invalid');
+  if (errorFields.length === 0) {
+    // Todas las validaciones han pasado, muestra una alerta de compra exitosa
+    alert("¡Has comprado con éxito!");
+    // Aquí puedes redirigir al usuario a otra página o realizar otras acciones posteriores a la compra.
+  } else {
+    // Algunas validaciones han fallado.
+    alert("Por favor, corrige los campos resaltados en rojo antes de volver a confirmar la compra.");
+  }
 
-
+});
 
