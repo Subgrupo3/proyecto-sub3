@@ -59,28 +59,43 @@
 
       <div class="text-start">
         <form>
+          <div>
           <h3>Tipo de envio</h3>
           <label>
-            <input class="mx-2" type="radio" name="envio" value="premium" onclick="calcularEnvio(this)">Premium 2 a 5 días (15%)
+            <input id="envioPremium" class="mx-2" type="radio" name="envio" value="premium" onclick="calcularEnvio(this), validarEnvio()">Premium 2 a 5 días (15%)
           </label><br>
           <label>
-            <input class="mx-2" type="radio" name="envio" value="express"  onclick="calcularEnvio(this)">Express 5 a 8 días (7%)
+            <input id="envioExpress" class="mx-2" type="radio" name="envio" value="express"  onclick="calcularEnvio(this)">Express 5 a 8 días (7%)
           </label><br>
           <label>
-            <input class="mx-2" type="radio" name="envio" value="standard"  onclick="calcularEnvio(this)">Standard 12 a 15 dias (5%)
+            <input id="envioStandard" class="mx-2" type="radio" name="envio" value="standard"  onclick="calcularEnvio(this)">Standard 12 a 15 dias (5%)
           </label><br>
+          <p id="botonEnvio"></p>
+          <div class="invalid-feedback"> 
+            Debe seleccionar un tipo de envio.
+          </div>
+        </div>
+
+          
+          <br>
           <h3 class="mt-5">Dirección de envío</h3>
           <div class="row">
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="calle" class="form-label">Calle</label>
-                    <input type="text" class="form-control" id="calle">
+                    <input type="text" class="form-control" id="calle" oninput="validarEnvio()">
+                    <div class="invalid-feedback">
+                      Debe ingresar una calle.
+                    </div>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="numero" class="form-label">Número</label>
-                    <input type="text" class="form-control" id="numero">
+                    <input type="text" class="form-control" id="numero" oninput="validarEnvio()">
+                    <div class="invalid-feedback">
+                      Debe ingresar su número de puerta.
+                    </div>
                 </div>
             </div>
         </div>
@@ -89,13 +104,17 @@
             <div class="col-md-12">
                 <div class="mb-3">
                     <label for="esquina" class="form-label">Esquina</label>
-                    <input type="text" class="form-control" id="esquina">
+                    <input type="text" class="form-control" id="esquina" oninput="validarEnvio()">
+                    <div class="invalid-feedback"> 
+                      Debe ingresar su esquina.
+                    </div>
                 </div>
             </div>
         </div>
         </form>
        </div>
        <hr>
+       <br>
        <h3 id="costos">Costos</h3>
        <br>
        <div class="list-group">
@@ -121,17 +140,23 @@
           </div>
         </li>
         </ul>
+        <br><br><hr><br><br>
         <div>
           <h3 class="text-start">Forma de pago</h3>
           <div class="d-flex card text-dark text-start">
             <p class="mx-2" >Pagar con: <span id="metodoPagoSeleccionado">No ha seleccionado </span>
-              <button type="button" class="btn btn-link mx-2" data-bs-toggle="modal" data-bs-target="#modalPagos" style="width: 15%;">Seleccionar</button>
+              <div>
+              <button type="button" class="btn btn-link mx-2" data-bs-toggle="modal" data-bs-target="#modalPagos" style="width: 15%;" id="metodoNoSeleccionado">Seleccionar</button>
+              <div class="invalid-feedback">
+                Debe seleccionar una forma de pago.
+              </div>
+            </div>
             </p>
-           
           </div>
+          
         </div>
 
-        <div><button type="button" class="btn btn-primary mx-auto mt-3" onclick="validateForm()">Finalizar compra</button></div>
+        <div><button type="button" class="btn btn-primary mx-auto mt-3" id="confirmarCompra">Finalizar compra</button></div>
         
       
         <div class="modal fade text-dark" id="modalPagos" tabindex="-1" aria-hidden="true">
@@ -143,27 +168,36 @@
               <div class="modal-body">
                 <form id="paymentForm">
                   <div class="form-check d-flex justify-content-start text-start mt-3 mx-2">
-                    <input type="radio" name="paymentMethod" id="credit_card" value="credit_card" onclick="habilitarCampos('credit_card')">
+                    <input type="radio" name="paymentMethod" id="credit_card" value="credit_card" onclick="habilitarCampos('credit_card')" onchange="validarPago()">
                     <label class="form-check-label" for="credit_card">Tarjeta de crédito</label>
                   </div>
                   <hr>
                   <div class="d-flex">
-                    <div class="mt-3 justify-content-start text-start col-md-4 mx-3">
+                    <div id="numTarjeta" class="mt-3 justify-content-start text-start col-md-4 mx-3">
                       <p>
-                        <label for="cardNumber">Numero de Tarjeta</label>
+                        <label for="cardNumber">Número de Tarjeta</label>
+                        <div class="invalid-feedback"> 
+                          Debe ingresar su Número. 
+                        </div>
                       </p>
                       <input type="text" class="form-control campos-tarjeta" id="cardNumber">
                     </div>
-                    <div class="mt-3 justify-content-start text-start col-md-4 mx-3">
+                    <div id="codigoSeg" class="mt-3 justify-content-start text-start col-md-4 mx-3">
                       <p>
-                        <label for="securityCode">Codigo de seg</label>
+                        <label for="securityCode">Código de seguridad</label>
+                        <div class="invalid-feedback"> 
+                          Debe ingresar su código. 
+                        </div>
                       </p>
                       <input type="text" class="form-control campos-tarjeta" id="securityCode">
                     </div>
                   </div>
-                  <div class="mt-3 justify-content-start text-start col-md-4 mx-3">
+                  <div  id="vencimiento" class="mt-3 justify-content-start text-start col-md-4 mx-3">
                     <p>
                       <label for="expirationDate">Vencimiento (MM/AA)</label>
+                      <div class="invalid-feedback"> 
+                        Debe ingresar su vencimiento. 
+                      </div>
                     </p>
                     <input type="text" class="form-control campos-tarjeta" id="expirationDate">
                   </div>
@@ -171,13 +205,15 @@
                     <hr id="hr" >
                   </strong>
                   <div class="form-check d-flex justify-content-start text-start mt-3 mx-2">
-                    <input type="radio" name="paymentMethod" id="bank" value="bank" onclick="habilitarCampos('bank')">
+                    <input type="radio" name="paymentMethod" id="bank" value="bank" onclick="habilitarCampos('bank'), validarPago()">
                     <label class="form-check-label" for="bank">Transferencia bancaria</label>
                   </div>
                   <hr>
-                  <div class="mt-3 justify-content-start text-start col-md-4 mx-3">
+                  <div id="numCuenta" class="mt-3 justify-content-start text-start col-md-4 mx-3">
                     <p>
                       <label for="accountNumber">Numero de Cuenta</label>
+                      <div class="invalid-feedback"> 
+                        Debe ingresar su número de cuenta.
                     </p>
                     <input type="text" class="form-control campos-transferencia" id="accountNumber">
                   </div>
@@ -189,9 +225,6 @@
             </div>
           </div>
         </div>
-        
-
-
 
 
       </div>

@@ -196,7 +196,7 @@ function calcularTotal(envioFinal){ //Recibe el precio del envio
 
 }
 
-
+/*
 function validateForm() {
   const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked');
   const cardNumber = document.getElementById('cardNumber');
@@ -215,9 +215,7 @@ function validateForm() {
   } else {
     alert('Formulario válido. Puedes enviar los datos al servidor.');
   }
-}
-
-
+}*/
 
 function habilitarCampos(metodoPago) {
   // Obtener los campos de entrada relevantes
@@ -262,4 +260,72 @@ function habilitarCampos(metodoPago) {
     metodoPagoSeleccionado.textContent = 'No se ha seleccionado';
   }
 }
+
+function validarEnvio(){
+ 
+  const inputCalle = document.getElementById("calle");
+  if(inputCalle.value === ""){
+      inputCalle.classList.add("is-invalid");
+  } else{
+    inputCalle.classList.remove("is-invalid");
+  }
+
+const inputNumero = document.getElementById("numero")
+if(inputNumero.value === ""){
+  inputNumero.classList.add("is-invalid");
+} else{
+inputNumero.classList.remove("is-invalid");
+}
+
+const inputEsquina = document.getElementById("esquina")
+if(inputEsquina.value ===""){
+  inputEsquina.classList.add("is-invalid");
+  } else {
+  inputEsquina.classList.remove("is-invalid");
+  }
+
+  const envioPremium = document.getElementById("envioPremium");
+  const envioExpress = document.getElementById("envioExpress");
+  const envioStandard = document.getElementById("envioStandard");
+  
+  const botonEnvio = document.getElementById("botonEnvio");
+
+  if((!(envioPremium.checked)) && (!(envioExpress.checked)) && (!(envioStandard.checked))){
+    botonEnvio.classList.add("is-invalid");
+    console.log("probando");
+  } else{
+    botonEnvio.classList.remove("is-invalid");
+  }
+
+}
+
+function validarCampos(){
+  const inputnumTarjeta = document.getElementById ("numTarjeta");
+  if(inputnumTarjeta.value === ""){}
+}
+
+function validarPago(){
+  const credito = document.getElementById("credit_card");
+  const transferencia = document.getElementById("bank");
+
+  const metodo = document.getElementById("metodoNoSeleccionado");
+  
+  if((!(credito.checked)) && (!(transferencia.checked))){
+    metodo.classList.add("is-invalid");
+    metodo.classList.add("text-danger");
+  } else{
+    metodo.classList.remove("is-invalid");
+    metodo.classList.remove("text-danger");
+  }
+
+}
+
+const confirmarCompra = document.getElementById("confirmarCompra");
+
+confirmarCompra.addEventListener("click", function(){
+  validarEnvio();
+  validarPago();
+})
+
+
 
