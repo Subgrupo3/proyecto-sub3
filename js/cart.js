@@ -278,6 +278,7 @@ if(inputEsquina.value ===""){
 
 }
 
+/*
 function validarCampos(){
   const inputnumTarjeta = document.getElementById ("numTarjeta");
   if(inputnumTarjeta.value === ""){
@@ -287,7 +288,7 @@ function validarCampos(){
   }
 
 const inputcodigoSeg = document.getElementById ("codigoSeg");
-if(inputcodigoSeg.value)  
+if(inputcodigoSeg.value ===  
 }
 
 function validarPago(){
@@ -305,6 +306,7 @@ function validarPago(){
   }
 
 }
+*/
 
 const confirmarCompra = document.getElementById("confirmarCompra");
 
