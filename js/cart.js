@@ -282,33 +282,35 @@ if(inputEsquina.value ===""){
 }
 
 function validarTipoEnvio(){
+
+  //Obtengo los radio buttons
   const envioPremium = document.getElementById("envioPremium");
   const envioExpress = document.getElementById("envioExpress");
   const envioStandard = document.getElementById("envioStandard");
   
-  const tipoEnvios = document.getElementById("tipoEnvios");
+  const tipoEnvios = document.getElementById("tipoEnvios"); //Obtengo el elemento que se hizo para relacionar a la alerta
 
-  if((!(envioPremium.checked)) && (!(envioExpress.checked)) && (!(envioStandard.checked))){
-    tipoEnvios.classList.add("is-invalid");
+  if((!(envioPremium.checked)) && (!(envioExpress.checked)) && (!(envioStandard.checked))){ //Si ninguno esta seleccionado
+    tipoEnvios.classList.add("is-invalid"); //Se muestra el error
     console.log("probando");
-  } else{
-    tipoEnvios.classList.remove("is-invalid");
+  } else{ //Si por lo menos uno esta seleccionado
+    tipoEnvios.classList.remove("is-invalid"); //No se muestra el error
   }
 }
 
 
 function validarCamposTarjeta(){
 
-  const metodo = document.getElementById("metodoNoSeleccionado");
+  const metodo = document.getElementById("metodoNoSeleccionado"); //Boton Seleccionar
 
-  const inputaccountNumber = document.getElementById ("accountNumber");
-  inputaccountNumber.classList.remove("is-invalid");
+  const inputaccountNumber = document.getElementById ("accountNumber"); //Elemento numero de cuenta
+  inputaccountNumber.classList.remove("is-invalid"); //Se elimina el error
 
-  const inputcardNumber = document.getElementById("cardNumber");
-  if(inputcardNumber.value === ""){
+  const inputcardNumber = document.getElementById("cardNumber"); //Numero de tarjeta
+  if(inputcardNumber.value === ""){ //Si esta vacio
     console.log("invalido numtarjeta");
-    inputcardNumber.classList.add("is-invalid");
-    metodo.classList.add("text-danger");
+    inputcardNumber.classList.add("is-invalid"); //Se muestra error
+    metodo.classList.add("text-danger"); //El boton seleccionar se pone rojo
   } else {
     inputcardNumber.classList.remove("is-invalid");
     metodo.classList.remove("text-danger");
@@ -334,7 +336,7 @@ if(inputexpirationDate.value === "") {
 }
 
 
-function validarCamposTransferencia(){
+function validarCamposTransferencia(){ 
   
   const metodo = document.getElementById("metodoNoSeleccionado");
   const inputaccountNumber = document.getElementById ("accountNumber");
@@ -384,7 +386,7 @@ function validarCantidad(){
 
 const confirmarCompra = document.getElementById("confirmarCompra");
 
-confirmarCompra.addEventListener("click", function(){
+confirmarCompra.addEventListener("click", function(){ //Cuando se hace click sobre el boton confirmar compra se ejecutan las validaciones
 
   const credito = document.getElementById("credit_card");
   const transferencia = document.getElementById("bank");
@@ -394,16 +396,16 @@ confirmarCompra.addEventListener("click", function(){
   validarTipoEnvio();
   validarCantidad();
   
-  if(credito.checked){
-    validarCamposTarjeta();
-  } else if(transferencia.checked){
-    validarCamposTransferencia();
+  if(credito.checked){ //Si se selecciona tarjeta
+    validarCamposTarjeta(); //Se validan los campos de tarjeta
+  } else if(transferencia.checked){ //Si se selecciona transferencia
+    validarCamposTransferencia(); //Se validan los campos de transferencia
   }
 
-  credito.addEventListener("click", function(){
+  credito.addEventListener("click", function(){ //Si se cambia luego a tarjeta
     validarCamposTarjeta();
   })
-  transferencia.addEventListener("click", function(){
+  transferencia.addEventListener("click", function(){ //Si se cambia a transferencia
     validarCamposTransferencia();
   })
 
