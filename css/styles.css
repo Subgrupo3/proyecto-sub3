@@ -131,8 +131,6 @@ nav a {
 }
 
 
-
-
 .jumbotron p:last-child {
   margin-bottom: 0;
 }
@@ -320,12 +318,6 @@ img.avatar {
   margin: 0 auto; /* Esto centra el contenedor horizontalmente en la página */
 }
 
-
-
-
-
-
-
 span.psw {
   float: right;
   padding-top: 16px;
@@ -398,4 +390,14 @@ ul {
 /*Total del carrito en negrita*/
 #total{
   font-weight: bold;
+}
+
+/*Titulo del apartado perfil*/
+#tituloPerfil{
+  text-align: left;
+}
+
+#botonGuardarPerfil{
+  width: 20%;
+  float: left;
 }
