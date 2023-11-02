@@ -1,36 +1,47 @@
 document.addEventListener("DOMContentLoaded", function() {
-const primerNombre = document.getElementById("inputPrimerNombre");
-const primerApellido = document.getElementById("inputPrimerApellido");
-const telefono = document.getElementById("inputTelefono");
+  const primerNombre = document.getElementById("inputPrimerNombre");
+  const segundoNombre = document.getElementById("inputSegundoNombre");
+  const primerApellido = document.getElementById("inputPrimerApellido");
+  const segundoApellido = document.getElementById("inputSegundoApellido");
+  const telefono = document.getElementById("inputTelefono");
+  const email = document.getElementById("inputEmail");
+  const botonGuardarPerfil = document.getElementById("botonGuardarPerfil");
 
+  // Obtener los datos del usuario almacenados en el localStorage
+  const userData = JSON.parse(localStorage.getItem("userData"));
 
+  // Rellenar los campos con los datos almacenados (si están disponibles)
+  if (userData) {
+    primerNombre.value = userData.primerNombre || "";
+    segundoNombre.value = userData.segundoNombre || "";
+    primerApellido.value = userData.primerApellido || "";
+    segundoApellido.value = userData.segundoApellido || "";
+    telefono.value = userData.telefono || "";
+    email.value = userData.email || "";
+  }
 
+  botonGuardarPerfil.addEventListener("click", function(event) {
+    event.preventDefault();
 
+    // Guardar los datos del usuario en el localStorage
+    const userData = {
+      primerNombre: primerNombre.value,
+      segundoNombre: segundoNombre.value,
+      primerApellido: primerApellido.value,
+      segundoApellido: segundoApellido.value,
+      telefono: telefono.value,
+      email: email.value,
+    };
+    localStorage.setItem("userData", JSON.stringify(userData));
 
-
-//Email
-const user = localStorage.getItem("userName"); //Obtengo el correo que se guardo en el localStorage cuando se ingresó
-const email = document.getElementById("inputEmail"); //Obtengo el elemento del email 
-email.value = user; //Seteo el input de email para el correo que dio el usuario
-
-
-
-
-
-botonGuardarPerfil.addEventListener("click", function(){ //Lo que pasa cuando hace click en el boton "Guardar cambios"
-event.preventDefault();
-
-//Verificamos campos obligatorios.
-if (primerNombre.value.trim() === '' || primerApellido.value.trim() === '' || email.value.trim() === '') {
-    alert ('Complete los campos obligatorios.');
-
-} else {
-    localStorage.setItem("userName", inputEmail.value); //Se setea el correo del usuario en el local storage con el ingresado en el input correo (Se actualiza el dropdown que muestra el username y el de los comentarios)
-  alert ('Los cambios han sido guardados.')
-}
-
-
-});
+    // Verificar campos obligatorios.
+    if (primerNombre.value.trim() === '' || primerApellido.value.trim() === '' || email.value.trim() === '') {
+      alert('Complete los campos obligatorios.');
+    } else {
+      localStorage.setItem("userName", email.value); 
+      alert('Los cambios han sido guardados.');
+    }
+  });
 });
 
 
