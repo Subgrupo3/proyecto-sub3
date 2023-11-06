@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>eMercado - Todo lo que busques está aquí</title>
 
+  <!-- Enlaces a archivos CSS y fuentes externos -->
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
   <link href="css/font-awesome.min.css" rel="stylesheet">
   <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -30,39 +31,38 @@
           <li class="nav-item">
             <a class="nav-link" href="sell.html">Vender</a>
           </li>
-
           <div id="user-menu" class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="botonMenuUsuario"
               data-bs-toggle="dropdown" aria-expanded="false">
               Usuario
             </button>
             <ul class="dropdown-menu" aria-labelledby="botonMenuUsuario">
-              <!--Acá agregamos las opciones del menu desplegable-->
+              <!-- Opciones del menú desplegable para usuarios -->
               <li><a class="dropdown-item" href="cart.html">Mi carrito</a></li>
               <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
               <li><a class="dropdown-item" href="login.html" id="link-cerrarsesion">Cerrar Sesión</a></li>
               <li><button id="modoBoton">Cambiar a modo noche</button></li>
             </ul>
           </div>
-
         </ul>
       </div>
     </div>
   </nav>
-  <!-- Aquí se agregará el título y el subtítulo -->
+
+  <!-- Título y subtítulo de la página de productos -->
   <div class="text-center p-4">
     <h2> Productos</h2>
     <p class="lead" id="catDescripcion"></p>
   </div>
 
-
   <main class="pb-5 container">
-
-    <!-- Aquí Agregamos una barra de busqueda -->
+    <!-- Barra de búsqueda de productos -->
     <div class="input-group mb-3">
       <input type="text" class="form-control" id="searchInput" placeholder="Buscar productos...">
       <button class="btn btn-primary" type="button" id="searchButton">Buscar</button>
     </div>
+
+    <!-- Filtros y opciones de ordenamiento -->
     <div class="row">
       <div class="col-lg-6 offset-lg-6 col-md-12 mb-1 container">
         <div class="row container p-0 m-0">
@@ -85,6 +85,7 @@
       </div>
       <div class="row">
         <div class="col text-end">
+          <!-- Opciones de ordenamiento de productos -->
           <div class="btn-group btn-group-toggle mb-4" data-bs-toggle="buttons">
             <input type="radio" class="btn-check" name="options" id="sortDesc">
             <label class="btn btn-light" for="sortAsc"><i class="fas fa-sort-amount-up mr-1"></i>$</label>
@@ -99,9 +100,10 @@
         <div class="container" id="product-list-container">
         </div>
       </div>
+    </div>
   </main>
   <footer class="text-muted">
-    <div class="container d-flex justify-content-between align-items-center">
+    <div class="container d-flex justify-content between align-items-center">
       <p class="text-secondary text-center mx-auto">Este sitio forma parte de <a
           href="https://jovenesaprogramar.edu.uy/" target="_blank">Jóvenes a Programar</a></p>
       <p class="text-end">
@@ -117,6 +119,8 @@
       <div></div>
     </div>
   </div>
+
+  <!-- Enlaces a archivos JavaScript externos -->
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="js/index.js"></script>
   <script src="js/init.js"></script>
