@@ -4,6 +4,7 @@
 .site-header {
   font-family: 'Verdana', serif !important;
 }
+
 #buscador{
   width: 80px;
   margin: 5px;
@@ -400,4 +401,19 @@ ul {
 #botonGuardarPerfil{
   width: 20%;
   float: left;
+}
+
+.bd-placeholder-img {
+  font-size: 1.125rem;
+  text-anchor: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+@media (min-width: 768px) {
+  .bd-placeholder-img-lg {
+    font-size: 3.5rem;
+  }
 }
