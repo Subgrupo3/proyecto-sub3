@@ -30,33 +30,34 @@
           <li class="nav-item">
             <a class="nav-link" href="sell.html">Vender</a>
           </li>
-          
+
           <div id="user-menu" class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="botonMenuUsuario" data-bs-toggle="dropdown" aria-expanded="false">
-             Usuario
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="botonMenuUsuario"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              Usuario
             </button>
-           <ul class="dropdown-menu" aria-labelledby="botonMenuUsuario">
-             <!--Acá agregamos las opciones del menu desplegable-->
-           <li><a class="dropdown-item" href= "cart.html">Mi carrito</a></li>
-           <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
-           <li><a class="dropdown-item" href="login.html" id="link-cerrarsesion">Cerrar Sesión</a></li>
-           <li><button id="modoBoton">Cambiar a modo noche</button></li>
-           </ul>  
-           </div>
-          
+            <ul class="dropdown-menu" aria-labelledby="botonMenuUsuario">
+              <!--Acá agregamos las opciones del menu desplegable-->
+              <li><a class="dropdown-item" href="cart.html">Mi carrito</a></li>
+              <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
+              <li><a class="dropdown-item" href="login.html" id="link-cerrarsesion">Cerrar Sesión</a></li>
+              <li><button id="modoBoton">Cambiar a modo noche</button></li>
+            </ul>
+          </div>
+
         </ul>
       </div>
     </div>
   </nav>
-    <!-- Aquí se agregará el título y el subtítulo -->
-    <div class="text-center p-4">
-      <h2> Productos</h2>
-      <p class="lead" id="catDescripcion"></p>
-    </div>
-    
+  <!-- Aquí se agregará el título y el subtítulo -->
+  <div class="text-center p-4">
+    <h2> Productos</h2>
+    <p class="lead" id="catDescripcion"></p>
+  </div>
+
 
   <main class="pb-5 container">
-    
+
     <!-- Aquí Agregamos una barra de busqueda -->
     <div class="input-group mb-3">
       <input type="text" class="form-control" id="searchInput" placeholder="Buscar productos...">
@@ -101,12 +102,13 @@
   </main>
   <footer class="text-muted">
     <div class="container d-flex justify-content-between align-items-center">
-      <p class="text-secondary text-center mx-auto">Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jóvenes a Programar</a></p>
+      <p class="text-secondary text-center mx-auto">Este sitio forma parte de <a
+          href="https://jovenesaprogramar.edu.uy/" target="_blank">Jóvenes a Programar</a></p>
       <p class="text-end">
         <a href="#">Volver arriba</a>
       </p>
     </div>
-</footer>
+  </footer>
   <div id="spinner-wrapper">
     <div class="lds-ring">
       <div></div>
@@ -117,10 +119,9 @@
   </div>
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="js/index.js"></script>
-   <script src="js/init.js"></script>
+  <script src="js/init.js"></script>
   <script src="js/products.js"></script>
   <script src="js/modo.js"></script>
 </body>
 
 </html>
-

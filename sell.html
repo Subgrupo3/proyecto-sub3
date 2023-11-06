@@ -29,19 +29,20 @@
           <li class="nav-item">
             <a class="nav-link active" href="sell.html">Vender</a>
           </li>
-         
+
           <div id="user-menu" class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="botonMenuUsuario" data-bs-toggle="dropdown" aria-expanded="false">
-             Usuario
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="botonMenuUsuario"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              Usuario
             </button>
-           <ul class="dropdown-menu" aria-labelledby="botonMenuUsuario">
-             <!--Acá agregamos las opciones del menu desplegable-->
-           <li><a class="dropdown-item" href= "cart.html">Mi carrito</a></li>
-           <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
-           <li><a class="dropdown-item" href="login.html" id="link-cerrarsesion">Cerrar Sesión</a></li>
-           <li><button id="modoBoton">Cambiar a modo noche</button></li>
-           </ul>  
-           </div>
+            <ul class="dropdown-menu" aria-labelledby="botonMenuUsuario">
+              <!--Acá agregamos las opciones del menu desplegable-->
+              <li><a class="dropdown-item" href="cart.html">Mi carrito</a></li>
+              <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
+              <li><a class="dropdown-item" href="login.html" id="link-cerrarsesion">Cerrar Sesión</a></li>
+              <li><button id="modoBoton">Cambiar a modo noche</button></li>
+            </ul>
+          </div>
         </ul>
       </div>
     </div>
@@ -83,15 +84,16 @@
           <div class="row">
             <div class="col-md-3 mb-3">
               <label for="productCostInput">Costo</label>
-              <input type="number" name="productCostInput" class="form-control" id="productCostInput" placeholder="" required="" value="0"
-                min="0">
+              <input type="number" name="productCostInput" class="form-control" id="productCostInput" placeholder=""
+                required="" value="0" min="0">
               <div class="invalid-feedback">
                 El costo debe ser mayor que 0.
               </div>
             </div>
             <div class="col-md-4 mb-3">
               <label for="productCurrency">Moneda</label>
-              <select name="productCurrency" class="form-select custom-select d-block w-100" id="productCurrency" required>
+              <select name="productCurrency" class="form-select custom-select d-block w-100" id="productCurrency"
+                required>
                 <option value="" hidden selected>Seleccionar moneda</option>
                 <option>Pesos Uruguayos (UYU)</option>
                 <option>Dólares (USD)</option>
@@ -121,8 +123,8 @@
           <div class="row">
             <div class="col-md-3 mb-3">
               <label for="productCountInput">Cantidad en stock</label>
-              <input type="number" name="productCountInput" class="form-control" id="productCountInput"  required value="1"
-                min="0">
+              <input type="number" name="productCountInput" class="form-control" id="productCountInput" required
+                value="1" min="0">
               <div class="invalid-feedback">
                 La cantidad es requerida.
               </div>
@@ -180,12 +182,13 @@
   </div>
   <footer class="text-muted">
     <div class="container d-flex justify-content-between align-items-center">
-      <p class="text-secondary text-center mx-auto">Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jóvenes a Programar</a></p>
+      <p class="text-secondary text-center mx-auto">Este sitio forma parte de <a
+          href="https://jovenesaprogramar.edu.uy/" target="_blank">Jóvenes a Programar</a></p>
       <p class="text-end">
         <a href="#">Volver arriba</a>
       </p>
     </div>
-</footer>
+  </footer>
 
   <div class="alert alert-primary-dismissible fade" id="alertResult" role="alert">
     <span id="resultSpan"></span>
