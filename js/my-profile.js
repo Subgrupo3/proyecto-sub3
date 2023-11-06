@@ -7,6 +7,13 @@ document.addEventListener("DOMContentLoaded", function () {
   const email = document.getElementById("inputEmail");
   const botonGuardarPerfil = document.getElementById("botonGuardarPerfil");
 
+  //Email
+  const user = localStorage.getItem("userName"); //Obtengo el correo que se guardo en el localStorage cuando se ingresó
+
+  email.value = user; //Seteo el input de email para el correo que dio el usuario
+
+  
+
   // Obtener los datos del usuario almacenados en el localStorage
   const userData = JSON.parse(localStorage.getItem("userData"));
 
@@ -33,6 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
       email: email.value,
     };
     localStorage.setItem("userData", JSON.stringify(userData));
+    localStorage.setItem("userName", email.value);
 
     // Verificar campos obligatorios.
     if (primerNombre.value.trim() === '' || primerApellido.value.trim() === '' || email.value.trim() === '') {
@@ -40,6 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
       localStorage.setItem("userName", email.value);
       alert('Los cambios han sido guardados.');
+      window.location.href = window.location.href;
     }
   });
 });
