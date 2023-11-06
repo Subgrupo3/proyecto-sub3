@@ -4,24 +4,24 @@ function setProdID(id) {
   window.location = "product-info.html"
 };
 
-  // Obtenemos el ID del producto guardado en el almacenamiento local
-  const productId = localStorage.getItem("prodID");
+// Obtenemos el ID del producto guardado en el almacenamiento local
+const productId = localStorage.getItem("prodID");
 
 document.addEventListener("DOMContentLoaded", function () {
-  
 
-// Creamos la funcion que detecta el nuemro de estrelas y las muestra en pantalla
+
+  // Creamos la funcion que detecta el nuemro de estrelas y las muestra en pantalla
   function generateStars(score) {
     let stars = '';
-    for(let i = 1; i <= 5; i++) {
-        if(i <= score) {
-            stars += '<span class="fa fa-star checked"></span>';
-        } else {
-            stars += '<span class="fa fa-star"></span>';
-        }
+    for (let i = 1; i <= 5; i++) {
+      if (i <= score) {
+        stars += '<span class="fa fa-star checked"></span>';
+      } else {
+        stars += '<span class="fa fa-star"></span>';
+      }
     }
     return stars;
-}
+  }
 
   // Verificamos si se ha guardado un ID de producto
   if (productId) {
@@ -117,7 +117,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
 
 
-      //creamos la constante para la URL de los comentarios.
+    //creamos la constante para la URL de los comentarios.
     const commentsURL = `https://japceibal.github.io/emercado-api/products_comments/${productId}.json`;
 
 
@@ -128,18 +128,18 @@ document.addEventListener("DOMContentLoaded", function () {
       .then(function (commentsData) {
         // Accedemos a los comentarios de usuarios y los mostramos en el HTML
         const commentsContainer = document.getElementById("comments-container");
-        
+
         let allCommentsHTML = '<h2>Comentarios:</h2>';  // Inicializamos una variable para construir el contenido HTML
-    
-        for(let comment of commentsData) {
-            const cliente = comment.user;
-            const fecha = comment.dateTime;
-            const comentario = comment.description;
-            const puntos = comment.score;
-            const starsRepresentation = generateStars(puntos);
-            
-            // Añadimos el comentario a la variable allCommentsHTML
-            allCommentsHTML += `
+
+        for (let comment of commentsData) {
+          const cliente = comment.user;
+          const fecha = comment.dateTime;
+          const comentario = comment.description;
+          const puntos = comment.score;
+          const starsRepresentation = generateStars(puntos);
+
+          // Añadimos el comentario a la variable allCommentsHTML
+          allCommentsHTML += `
                 <hr>
                 <ul>
                     <li>
@@ -149,10 +149,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 </ul>
             `;
         }
-    
+
         // Actualizamos el contenido de commentsContainer con todos los comentarios
         commentsContainer.innerHTML = allCommentsHTML;
-    })
+      })
 
       .catch(function (error) {
         console.error("Error al obtener los comentarios:", error);
@@ -162,26 +162,26 @@ document.addEventListener("DOMContentLoaded", function () {
     console.error("No se encontró un ID de producto en el almacenamiento local.");
   }
 
-let btnComentar = document.getElementById("btnComentar");
+  let btnComentar = document.getElementById("btnComentar");
 
-btnComentar.addEventListener("click", function (){
- let comentarios = document.getElementById("nuevosComentarios");
+  btnComentar.addEventListener("click", function () {
+    let comentarios = document.getElementById("nuevosComentarios");
 
-let nuevoComentario = document.getElementById("comentar").value;
-let usuario = localStorage.getItem("userName")
-let calificacionNumero = document.getElementById("puntuaciones").value;
-let calificacionEstrellas = generateStars(calificacionNumero);
+    let nuevoComentario = document.getElementById("comentar").value;
+    let usuario = localStorage.getItem("userName")
+    let calificacionNumero = document.getElementById("puntuaciones").value;
+    let calificacionEstrellas = generateStars(calificacionNumero);
 
-// crea un nuevo objeto `Date`
-let today = new Date()
+    // crea un nuevo objeto `Date`
+    let today = new Date()
 
- // obtener la fecha y la hora
-var nowFecha = today.toISOString().split('T')[0]
-var nowHora = today.toLocaleTimeString();
+    // obtener la fecha y la hora
+    var nowFecha = today.toISOString().split('T')[0]
+    var nowHora = today.toLocaleTimeString();
 
 
-let comentariosNuevos = "";
-comentariosNuevos += `
+    let comentariosNuevos = "";
+    comentariosNuevos += `
 <hr>
 <ul>
     <li>
@@ -191,96 +191,96 @@ comentariosNuevos += `
 </ul>
 `;
 
-comentarios.innerHTML += comentariosNuevos;
+    comentarios.innerHTML += comentariosNuevos;
 
-})
-
-
-//Obtener el item definido en login.js con la key userName
-let storedData = localStorage.getItem("userName");
-
-//Obtenemos los elementos con id user para mostrar el usuario en el html
-let mostrarUser = document.getElementsByClassName("user");
-
-//Agregamos el nombre de usuario al html
-for (let i = 0; i < mostrarUser.length; i++) {
-  mostrarUser[i].textContent = storedData;
-}
+  })
 
 
-//join("") se utiliza para unir todos los fragmentos HTML en una sola cadena de texto.//
-//map es un método de JavaScript que se utiliza para iterar sobre cada elemento del array//
+  //Obtener el item definido en login.js con la key userName
+  let storedData = localStorage.getItem("userName");
 
-document.addEventListener("DOMContentLoaded", function () {
+  //Obtenemos los elementos con id user para mostrar el usuario en el html
+  let mostrarUser = document.getElementsByClassName("user");
 
-  // Inicializar el carrusel de imágenes del producto seleccionado al cargar la página
-  var productCarousel = new bootstrap.Carousel(document.getElementById("product-carousel"));
-
-  // Inicializar el carrusel de productos relacionados al cargar la página
-  var relatedProductsCarousel = new bootstrap.Carousel(document.getElementById("related-products-carousel"));
-});
-
-// ...
-
-function agregarProductoAlCarrito(productToAdd) {
-  // Obtener el carrito actual desde localStorage o crear uno nuevo
-  const cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-  // Verificar si el producto ya existe en el carrito
-  const existingProductIndex = cart.findIndex((product) => product.id === productToAdd.id);
-
-  if (existingProductIndex !== -1) {
-    // Si el producto ya existe, aumentar la cantidad
-    cart[existingProductIndex].quantity += productToAdd.quantity;
-  } else {
-    // Si el producto no existe en el carrito, agregarlo
-    cart.push(productToAdd);
+  //Agregamos el nombre de usuario al html
+  for (let i = 0; i < mostrarUser.length; i++) {
+    mostrarUser[i].textContent = storedData;
   }
 
-  // Guardar el carrito actualizado en localStorage
-  localStorage.setItem("cart", JSON.stringify(cart));
-}
 
-let agregarProducto = document.getElementById("agregarProducto");
+  //join("") se utiliza para unir todos los fragmentos HTML en una sola cadena de texto.//
+  //map es un método de JavaScript que se utiliza para iterar sobre cada elemento del array//
 
-agregarProducto.addEventListener("click", function () {
-  if (productId) {
-    // Construimos la URL para obtener la información del producto
-    const productURL = `https://japceibal.github.io/emercado-api/products/${productId}.json`;
+  document.addEventListener("DOMContentLoaded", function () {
 
-    // Realizamos la solicitud GET para obtener la información del producto mediante un fetch
-    fetch(productURL)
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (productData) {
-        const productName = productData.name;
-        const productCost = productData.cost;
-        const productCurrency = productData.currency;
-        const productImages = productData.images[0];
+    // Inicializar el carrusel de imágenes del producto seleccionado al cargar la página
+    var productCarousel = new bootstrap.Carousel(document.getElementById("product-carousel"));
 
-        // Crear un objeto que represente el producto a agregar al carrito
-        const productToAdd = {
-          id: productId,
-          name: productName,
-          cost: productCost,
-          currency: productCurrency,
-          image: productImages,
-          quantity: 1
-        };
+    // Inicializar el carrusel de productos relacionados al cargar la página
+    var relatedProductsCarousel = new bootstrap.Carousel(document.getElementById("related-products-carousel"));
+  });
 
-        // Agregar el producto al carrito (usando la función que verifica duplicados)
-        agregarProductoAlCarrito(productToAdd);
+  // ...
 
-        // Redirigir al usuario a la página del carrito
-        window.location = "cart.html";
-      })
-      .catch(function (error) {
-        console.error("Error al obtener la información del producto:", error);
-      });
+  function agregarProductoAlCarrito(productToAdd) {
+    // Obtener el carrito actual desde localStorage o crear uno nuevo
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    // Verificar si el producto ya existe en el carrito
+    const existingProductIndex = cart.findIndex((product) => product.id === productToAdd.id);
+
+    if (existingProductIndex !== -1) {
+      // Si el producto ya existe, aumentar la cantidad
+      cart[existingProductIndex].quantity += productToAdd.quantity;
+    } else {
+      // Si el producto no existe en el carrito, agregarlo
+      cart.push(productToAdd);
+    }
+
+    // Guardar el carrito actualizado en localStorage
+    localStorage.setItem("cart", JSON.stringify(cart));
   }
-});
-// ...
+
+  let agregarProducto = document.getElementById("agregarProducto");
+
+  agregarProducto.addEventListener("click", function () {
+    if (productId) {
+      // Construimos la URL para obtener la información del producto
+      const productURL = `https://japceibal.github.io/emercado-api/products/${productId}.json`;
+
+      // Realizamos la solicitud GET para obtener la información del producto mediante un fetch
+      fetch(productURL)
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (productData) {
+          const productName = productData.name;
+          const productCost = productData.cost;
+          const productCurrency = productData.currency;
+          const productImages = productData.images[0];
+
+          // Crear un objeto que represente el producto a agregar al carrito
+          const productToAdd = {
+            id: productId,
+            name: productName,
+            cost: productCost,
+            currency: productCurrency,
+            image: productImages,
+            quantity: 1
+          };
+
+          // Agregar el producto al carrito (usando la función que verifica duplicados)
+          agregarProductoAlCarrito(productToAdd);
+
+          // Redirigir al usuario a la página del carrito
+          window.location = "cart.html";
+        })
+        .catch(function (error) {
+          console.error("Error al obtener la información del producto:", error);
+        });
+    }
+  });
+  // ...
 
 
 

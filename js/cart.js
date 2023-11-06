@@ -72,18 +72,18 @@ function mostrarCarrito(cart) {
       cartHTML += `<td><button class="btn btn-danger" onclick="removeProduct(${index}, document.querySelector('input[name=envio]:checked'))">Eliminar</button></td>`;
 
       if (product.currency === 'UYU') { //Si la moneda es UYU
-      // Calcula el subtotal en UYU
-      const subtotalProductoUYU = product.cost * product.quantity;
+        // Calcula el subtotal en UYU
+        const subtotalProductoUYU = product.cost * product.quantity;
 
-      // Convierte el subtotal a USD 
-       const subtotalProductoUSD = subtotalProductoUYU / 40;
+        // Convierte el subtotal a USD 
+        const subtotalProductoUSD = subtotalProductoUYU / 40;
 
-       product.subtotalProductoUSD = subtotalProductoUSD;
+        product.subtotalProductoUSD = subtotalProductoUSD;
 
-       //Lo agrego
-      cartHTML += `<td id="subtotal-${index}">USD ${subtotalProductoUSD.toFixed(2)}</td>`;
+        //Lo agrego
+        cartHTML += `<td id="subtotal-${index}">USD ${subtotalProductoUSD.toFixed(2)}</td>`;
 
-      } else{ //Si la poneda es USD
+      } else { //Si la poneda es USD
         // Calcula el subtotal del producto
         const subtotalProducto = product.cost * product.quantity;
         product.subtotalProducto = subtotalProducto;
@@ -100,25 +100,25 @@ function mostrarCarrito(cart) {
 
     cartInfoContainer.innerHTML = cartHTML;
 
-  
+
     // Calcula el subtotalFinal y lo muestra
     subtotalFinal = calcularSubtotalFinal(cart);
     document.getElementById("subtotalFinal").textContent = 'USD ' + subtotalFinal.toFixed(2);
 
-}
+  }
 }
 
 function calcularSubtotalFinal(cart) {
   subtotalFinal = 0; // Inicializa en 0
   for (const product of cart) { // Recorre los productos del carrito
-    if(product.currency === 'UYU'){
+    if (product.currency === 'UYU') {
       subtotalFinal += product.subtotalProductoUSD;
       console.log(subtotalFinal);
-    } else{
-      subtotalFinal += product.subtotalProducto; 
+    } else {
+      subtotalFinal += product.subtotalProducto;
     }
   }
-  return subtotalFinal; 
+  return subtotalFinal;
 }
 
 function updateSubtotalProducto(index, selectedRadioButton) {//Recibe el index del producto y el rabiobutton seleccionado
@@ -134,12 +134,12 @@ function updateSubtotalProducto(index, selectedRadioButton) {//Recibe el index d
   // Llamar a mostrarCarrito para actualizar la vista
   mostrarCarrito(cart);
 
-   // Llamar a calcularEnvio para actualizar el precio del envio
-   calcularEnvio(selectedRadioButton);
+  // Llamar a calcularEnvio para actualizar el precio del envio
+  calcularEnvio(selectedRadioButton);
 
 }
 
-function removeProduct(index, selectedRadioButton){ //Se ejecuta cuando se elimina un producto del carrito
+function removeProduct(index, selectedRadioButton) { //Se ejecuta cuando se elimina un producto del carrito
 
   // Obtener el carrito del almacenamiento local
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -157,7 +157,7 @@ function removeProduct(index, selectedRadioButton){ //Se ejecuta cuando se elimi
   calcularEnvio(selectedRadioButton);
 }
 
-function calcularEnvio(radioButton){
+function calcularEnvio(radioButton) {
 
   //Obtengo el elemento con id precioEnvio
   let precioEnvio = document.getElementById("precioEnvio");
@@ -179,13 +179,13 @@ function calcularEnvio(radioButton){
   else if (radioButton.value === "standard") {
     console.log('Radio button Standard seleccionado');//Verificacion interna
     envioFinal = (subtotalFinal * 0.05).toFixed(2);//Calculo el precio del envio
-    precioEnvio.textContent = 'USD ' + envioFinal ; //Cambio el contenido al subtotal más el porcentaje, con 2 cifras luego de la coma
+    precioEnvio.textContent = 'USD ' + envioFinal; //Cambio el contenido al subtotal más el porcentaje, con 2 cifras luego de la coma
     calcularTotal(envioFinal); //Llamo a la función que calcula el total
   }
 
 }
 
-function calcularTotal(envioFinal){ //Recibe el precio del envio
+function calcularTotal(envioFinal) { //Recibe el precio del envio
 
   let total = document.getElementById("total"); //Obtengo el elemento html donde se muestra el total
   let precioTotal = parseFloat(subtotalFinal) + parseFloat(envioFinal); //Sumo el subtotal final con el precio del envio
@@ -227,87 +227,87 @@ function habilitarCampos(metodoPago) {
       campo.disabled = false;
       campo.style.backgroundColor = ''; // Restablecer el fondo
     });
-    
+
     metodoPagoSeleccionado.innerHTML = "Transferencia bancaria";
   }
 }
 
-function validarEnvio(){
- 
+function validarEnvio() {
+
   const inputCalle = document.getElementById("calle");
-  if(inputCalle.value === ""){
-      inputCalle.classList.add("is-invalid");
-  } else{
-    inputCalle.classList.remove("is-invalid");
-  }
-
-const inputNumero = document.getElementById("numero")
-if(inputNumero.value === ""){
-  inputNumero.classList.add("is-invalid");
-} else{
-inputNumero.classList.remove("is-invalid");
-}
-
-const inputEsquina = document.getElementById("esquina")
-if(inputEsquina.value ===""){
-  inputEsquina.classList.add("is-invalid");
+  if (inputCalle.value === "") {
+    inputCalle.classList.add("is-invalid");
   } else {
-  inputEsquina.classList.remove("is-invalid");
-  }
-
-  inputCalle.addEventListener("input",function(){
-    if(inputCalle.value === ""){
-      inputCalle.classList.add("is-invalid");
-  } else{
     inputCalle.classList.remove("is-invalid");
   }
-})
 
-  inputNumero.addEventListener("input", function(){
-    if(inputNumero.value === ""){
-      inputNumero.classList.add("is-invalid");
-    } else{
+  const inputNumero = document.getElementById("numero")
+  if (inputNumero.value === "") {
+    inputNumero.classList.add("is-invalid");
+  } else {
     inputNumero.classList.remove("is-invalid");
+  }
+
+  const inputEsquina = document.getElementById("esquina")
+  if (inputEsquina.value === "") {
+    inputEsquina.classList.add("is-invalid");
+  } else {
+    inputEsquina.classList.remove("is-invalid");
+  }
+
+  inputCalle.addEventListener("input", function () {
+    if (inputCalle.value === "") {
+      inputCalle.classList.add("is-invalid");
+    } else {
+      inputCalle.classList.remove("is-invalid");
     }
   })
 
-  inputEsquina.addEventListener("input", function(){
-    if(inputEsquina.value ===""){
+  inputNumero.addEventListener("input", function () {
+    if (inputNumero.value === "") {
+      inputNumero.classList.add("is-invalid");
+    } else {
+      inputNumero.classList.remove("is-invalid");
+    }
+  })
+
+  inputEsquina.addEventListener("input", function () {
+    if (inputEsquina.value === "") {
       inputEsquina.classList.add("is-invalid");
-      } else {
+    } else {
       inputEsquina.classList.remove("is-invalid");
-      }
+    }
   })
 
 }
 
-function validarTipoEnvio(){
+function validarTipoEnvio() {
 
   //Obtengo los radio buttons
   const envioPremium = document.getElementById("envioPremium");
   const envioExpress = document.getElementById("envioExpress");
   const envioStandard = document.getElementById("envioStandard");
-  
+
   const tipoEnvios = document.getElementById("tipoEnvios"); //Obtengo el elemento que se hizo para relacionar a la alerta
 
-  if((!(envioPremium.checked)) && (!(envioExpress.checked)) && (!(envioStandard.checked))){ //Si ninguno esta seleccionado
+  if ((!(envioPremium.checked)) && (!(envioExpress.checked)) && (!(envioStandard.checked))) { //Si ninguno esta seleccionado
     tipoEnvios.classList.add("is-invalid"); //Se muestra el error
     console.log("probando");
-  } else{ //Si por lo menos uno esta seleccionado
+  } else { //Si por lo menos uno esta seleccionado
     tipoEnvios.classList.remove("is-invalid"); //No se muestra el error
   }
 }
 
 
-function validarCamposTarjeta(){
+function validarCamposTarjeta() {
 
   const metodo = document.getElementById("metodoNoSeleccionado"); //Boton Seleccionar
 
-  const inputaccountNumber = document.getElementById ("accountNumber"); //Elemento numero de cuenta
+  const inputaccountNumber = document.getElementById("accountNumber"); //Elemento numero de cuenta
   inputaccountNumber.classList.remove("is-invalid"); //Se elimina el error
 
   const inputcardNumber = document.getElementById("cardNumber"); //Numero de tarjeta
-  if(inputcardNumber.value === ""){ //Si esta vacio
+  if (inputcardNumber.value === "") { //Si esta vacio
     console.log("invalido numtarjeta");
     inputcardNumber.classList.add("is-invalid"); //Se muestra error
     metodo.classList.add("text-danger"); //El boton seleccionar se pone rojo
@@ -316,40 +316,40 @@ function validarCamposTarjeta(){
     metodo.classList.remove("text-danger");
   }
 
-const inputSecurityCode = document.getElementById("securityCode");
-if(inputSecurityCode.value === ""){
-  inputSecurityCode.classList.add("is-invalid");
-  metodo.classList.add("text-danger");
-} else{
-  inputSecurityCode.classList.remove("is-invalid");
-  metodo.classList.remove("text-danger");
+  const inputSecurityCode = document.getElementById("securityCode");
+  if (inputSecurityCode.value === "") {
+    inputSecurityCode.classList.add("is-invalid");
+    metodo.classList.add("text-danger");
+  } else {
+    inputSecurityCode.classList.remove("is-invalid");
+    metodo.classList.remove("text-danger");
+  }
+
+  const inputexpirationDate = document.getElementById("expirationDate");
+  if (inputexpirationDate.value === "") {
+    inputexpirationDate.classList.add("is-invalid");
+    metodo.classList.add("text-danger");
+  } else {
+    inputexpirationDate.classList.remove("is-invalid");
+    metodo.classList.remove("text-danger");
+  }
 }
 
-const inputexpirationDate = document.getElementById("expirationDate");
-if(inputexpirationDate.value === "") {
-  inputexpirationDate.classList.add("is-invalid");
-  metodo.classList.add("text-danger");
-} else {
-  inputexpirationDate.classList.remove("is-invalid"); 
-  metodo.classList.remove("text-danger");
-}
-}
 
+function validarCamposTransferencia() {
 
-function validarCamposTransferencia(){ 
-  
   const metodo = document.getElementById("metodoNoSeleccionado");
-  const inputaccountNumber = document.getElementById ("accountNumber");
+  const inputaccountNumber = document.getElementById("accountNumber");
 
   const inputcardNumber = document.getElementById("cardNumber");
   inputcardNumber.classList.remove("is-invalid");
   const inputSecurityCode = document.getElementById("securityCode");
   inputSecurityCode.classList.remove("is-invalid")
   const inputexpirationDate = document.getElementById("expirationDate");
-  inputexpirationDate.classList.remove("is-invalid"); 
+  inputexpirationDate.classList.remove("is-invalid");
 
 
-  if(inputaccountNumber.value === ""){
+  if (inputaccountNumber.value === "") {
     inputaccountNumber.classList.add("is-invalid");
     metodo.classList.add("text-danger");
   } else {
@@ -358,26 +358,26 @@ function validarCamposTransferencia(){
   }
 }
 
-function validarPago(){
+function validarPago() {
   const credito = document.getElementById("credit_card");
   const transferencia = document.getElementById("bank");
 
   const metodo = document.getElementById("metodoNoSeleccionado");
-  
-  if((!(credito.checked)) && (!(transferencia.checked))){
+
+  if ((!(credito.checked)) && (!(transferencia.checked))) {
     metodo.classList.add("is-invalid");
     metodo.classList.add("text-danger");
-  } else{
+  } else {
     metodo.classList.remove("is-invalid");
     metodo.classList.remove("text-danger");
   }
 
 }
 
-function validarCantidad(){
+function validarCantidad() {
   let cart = JSON.parse(localStorage.getItem("cart"));
   for (const product of cart) { // Recorre los productos del carrito
-    if(product.quantity <= 0){
+    if (product.quantity <= 0) {
       alert("La cantidad del producto " + product.name + " debe ser mayor a 0");
     }
   }
@@ -386,7 +386,7 @@ function validarCantidad(){
 
 const confirmarCompra = document.getElementById("confirmarCompra");
 
-confirmarCompra.addEventListener("click", function(){ //Cuando se hace click sobre el boton confirmar compra se ejecutan las validaciones
+confirmarCompra.addEventListener("click", function () { //Cuando se hace click sobre el boton confirmar compra se ejecutan las validaciones
 
   const credito = document.getElementById("credit_card");
   const transferencia = document.getElementById("bank");
@@ -395,17 +395,17 @@ confirmarCompra.addEventListener("click", function(){ //Cuando se hace click sob
   validarPago();
   validarTipoEnvio();
   validarCantidad();
-  
-  if(credito.checked){ //Si se selecciona tarjeta
+
+  if (credito.checked) { //Si se selecciona tarjeta
     validarCamposTarjeta(); //Se validan los campos de tarjeta
-  } else if(transferencia.checked){ //Si se selecciona transferencia
+  } else if (transferencia.checked) { //Si se selecciona transferencia
     validarCamposTransferencia(); //Se validan los campos de transferencia
   }
 
-  credito.addEventListener("click", function(){ //Si se cambia luego a tarjeta
+  credito.addEventListener("click", function () { //Si se cambia luego a tarjeta
     validarCamposTarjeta();
   })
-  transferencia.addEventListener("click", function(){ //Si se cambia a transferencia
+  transferencia.addEventListener("click", function () { //Si se cambia a transferencia
     validarCamposTransferencia();
   })
 

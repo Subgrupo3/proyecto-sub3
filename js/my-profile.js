@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
   const primerNombre = document.getElementById("inputPrimerNombre");
   const segundoNombre = document.getElementById("inputSegundoNombre");
   const primerApellido = document.getElementById("inputPrimerApellido");
@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function() {
     email.value = userData.email || "";
   }
 
-  botonGuardarPerfil.addEventListener("click", function(event) {
+  botonGuardarPerfil.addEventListener("click", function (event) {
     event.preventDefault();
 
     // Guardar los datos del usuario en el localStorage
@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function() {
     if (primerNombre.value.trim() === '' || primerApellido.value.trim() === '' || email.value.trim() === '') {
       alert('Complete los campos obligatorios.');
     } else {
-      localStorage.setItem("userName", email.value); 
+      localStorage.setItem("userName", email.value);
       alert('Los cambios han sido guardados.');
     }
   });
