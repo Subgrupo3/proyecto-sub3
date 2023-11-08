@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
+  <!-- Configuración de metadatos -->
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>eMercado - Todo lo que busques está aquí</title>
@@ -13,15 +13,16 @@
 </head>
 
 <body>
+  <!-- Barra de navegación -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-1">
     <div class="container">
       <!-- Botón para mostrar/ocultar el menú en dispositivos móviles -->
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav w-100 justify-content-between">
+          <!-- Elementos del menú de navegación -->
           <li class="nav-item">
             <a class="nav-link active" href="index.html">Inicio</a>
           </li>
@@ -31,9 +32,9 @@
           <li class="nav-item">
             <a class="nav-link" href="sell.html">Vender</a>
           </li>
+          <!-- Menú desplegable de usuario -->
           <div id="user-menu" class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="botonMenuUsuario"
-              data-bs-toggle="dropdown" aria-expanded="false">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="botonMenuUsuario" data-bs-toggle="dropdown" aria-expanded="false">
               Usuario
             </button>
             <ul class="dropdown-menu" aria-labelledby="botonMenuUsuario">
@@ -48,6 +49,7 @@
       </div>
     </div>
   </nav>
+  
   <main>
     <div class="jumbotron text-center"></div>
     <div class="album py-5 bg-light">
@@ -56,8 +58,7 @@
           <!-- Tarjeta para la categoría 'Autos' -->
           <div class="col-12 col-md-4">
             <div class="card mb-4 shadow-sm custom-card cursor-active" id="autos">
-              <img class="bd-placeholder-img card-img-top img-fluid" src="img/cars_index.jpg"
-                alt="Imágen representativa de la categoría 'Autos'">
+              <img class="bd-placeholder-img card-img-top img-fluid" src="img/cars_index.jpg" alt="Imágen representativa de la categoría 'Autos'">
               <h3 class="m-3">Autos</h3>
               <div class="card-body">
                 <p class="card-text">Los mejores precios en autos 0 kilómetro, de alta y media gama.</p>
@@ -67,10 +68,9 @@
           <!-- Tarjeta para la categoría 'Juguetes' -->
           <div class="col-12 col-md-4">
             <div class="card mb-4 shadow-sm custom-card cursor-active" id="juguetes">
-              <img class="bd-placeholder-img card-img-top img-fluid" src="img/toys_index.jpg"
-                alt="Imágen representativa de la categoría 'Juguetes'">
+              <img class="bd-placeholder-img card-img-top img-fluid" src="img/toys_index.jpg" alt="Imágen representativa de la categoría 'Juguetes'">
               <h3 class="m-3">Juguetes</h3>
-              <div class="card-body">
+              <div class "card-body">
                 <p class="card-text">Encuentra aquí los mejores precios para niños/as de cualquier edad.</p>
               </div>
             </div>
@@ -78,8 +78,7 @@
           <!-- Tarjeta para la categoría 'Muebles' -->
           <div class="col-12 col-md-4">
             <div class="card mb-4 shadow-sm custom-card cursor-active" id="muebles">
-              <img class="bd-placeholder-img card-img-top img-fluid" src="img/furniture_index.jpg"
-                alt="Imágen representativa de la categoría 'Muebles'">
+              <img class="bd-placeholder-img card-img-top img-fluid" src="img/furniture_index.jpg" alt="Imágen representativa de la categoría 'Muebles'">
               <h3 class="m-3">Muebles</h3>
               <div class="card-body">
                 <p class="card-text">Muebles antiguos, nuevos y para ser armados por uno mismo.</p>
@@ -94,21 +93,20 @@
       </div>
     </div>
   </main>
+  
   <footer class="text-muted">
     <div class="container d-flex justify-content-between align-items-center">
-      <p class="text-secondary text-center mx-auto">Este sitio forma parte de <a
-          href="https://jovenesaprogramar.edu.uy/" target="_blank">Jóvenes a Programar</a></p>
+      <p class="text-secondary text-center mx-auto">Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jóvenes a Programar</a></p>
       <p class="text-end">
         <a href="#">Volver arriba</a>
       </p>
     </div>
   </footer>
-
+  
   <!-- Enlaces a archivos JavaScript externos -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="js/index.js"></script>
   <script src="js/init.js"></script>
   <script src="js/modo.js"></script>
 </body>
-
 </html>

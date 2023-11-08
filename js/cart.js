@@ -1,6 +1,7 @@
-let subtotalFinal = 0;
+let subtotalFinal = 0; // Variable para almacenar el subtotal total de la compra
 
 document.addEventListener("DOMContentLoaded", function () {
+  // Cuando se carga el contenido de la página...
 
   // Obtener el carrito del almacenamiento local
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -10,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
     fetch("https://japceibal.github.io/emercado-api/user_cart/25801.json")
       .then((response) => response.json())
       .then((carritoData) => {
+        // Extraer datos del producto
         const producto = carritoData.articles[0];
         const nombreProducto = producto.name;
         const costoProducto = producto.unitCost;
@@ -17,6 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const monedaProducto = producto.currency;
         const imagenProducto = producto.image;
 
+        // Crear un objeto que representa el producto
         const initialProduct = {
           name: nombreProducto,
           cost: costoProducto,
@@ -25,19 +28,18 @@ document.addEventListener("DOMContentLoaded", function () {
           quantity: cantidadProducto,
         };
 
+        // Agregar el producto al carrito
         cart.push(initialProduct);
         localStorage.setItem("cart", JSON.stringify(cart));
 
-        mostrarCarrito(cart);
+        mostrarCarrito(cart); // Mostrar el contenido del carrito
       })
       .catch((error) => {
         console.error(error);
       });
   } else {
-    mostrarCarrito(cart);
+    mostrarCarrito(cart); // Si el carrito no está vacío, mostrar el contenido
   }
-
-
 });
 
 function mostrarCarrito(cart) {
@@ -68,27 +70,19 @@ function mostrarCarrito(cart) {
       cartHTML += `<td><img src="${product.image}" alt="${product.name}" width="100" class="product-image" onclick='localStorage.setItem("prodID", ${product.id}), window.location = "product-info.html"'></td>`;
       cartHTML += `<td>${product.name}</td>`;
       cartHTML += `<td>${product.currency} ${product.cost.toFixed(2)}</td>`;
-      cartHTML += `<td><input class="form-control form-control-sm" type="number" value="${product.quantity}" id="cantidad-input-${index}" onchange="updateSubtotalProducto(${index}, document.querySelector('input[name=envio]:checked'))"> </td>`; //Se fija en que radiobutton esta seleccionado
+      cartHTML += `<td><input class="form-control form-control-sm" type="number" value="${product.quantity}" id="cantidad-input-${index}" onchange="updateSubtotalProducto(${index}, document.querySelector('input[name=envio]:checked'))"></td>`;
       cartHTML += `<td><button class="btn btn-danger" onclick="removeProduct(${index}, document.querySelector('input[name=envio]:checked'))">Eliminar</button></td>`;
 
-      if (product.currency === 'UYU') { //Si la moneda es UYU
-        // Calcula el subtotal en UYU
+      if (product.currency === 'UYU') {
         const subtotalProductoUYU = product.cost * product.quantity;
-
-        // Convierte el subtotal a USD 
-        const subtotalProductoUSD = subtotalProductoUYU / 40;
-
+        const subtotalProductoUSD = subtotalProductoUYU / 40; // Tasa de cambio ficticia
         product.subtotalProductoUSD = subtotalProductoUSD;
-
-        //Lo agrego
         cartHTML += `<td id="subtotal-${index}">USD ${subtotalProductoUSD.toFixed(2)}</td>`;
 
-      } else { //Si la poneda es USD
-        // Calcula el subtotal del producto
+      } else {
         const subtotalProducto = product.cost * product.quantity;
         product.subtotalProducto = subtotalProducto;
         cartHTML += `<td id="subtotal-${index}">USD ${subtotalProducto.toFixed(2)}</td>`;
-
       }
 
       cartHTML += '</tr>';
@@ -100,20 +94,16 @@ function mostrarCarrito(cart) {
 
     cartInfoContainer.innerHTML = cartHTML;
 
-
-    // Calcula el subtotalFinal y lo muestra
     subtotalFinal = calcularSubtotalFinal(cart);
     document.getElementById("subtotalFinal").textContent = 'USD ' + subtotalFinal.toFixed(2);
-
   }
 }
 
 function calcularSubtotalFinal(cart) {
-  subtotalFinal = 0; // Inicializa en 0
-  for (const product of cart) { // Recorre los productos del carrito
+  subtotalFinal = 0;
+  for (const product of cart) {
     if (product.currency === 'UYU') {
       subtotalFinal += product.subtotalProductoUSD;
-      console.log(subtotalFinal);
     } else {
       subtotalFinal += product.subtotalProducto;
     }
@@ -121,111 +111,85 @@ function calcularSubtotalFinal(cart) {
   return subtotalFinal;
 }
 
-function updateSubtotalProducto(index, selectedRadioButton) {//Recibe el index del producto y el rabiobutton seleccionado
+function updateSubtotalProducto(index, selectedRadioButton) {
   const quantityInput = document.getElementById(`cantidad-input-${index}`);
 
-  // Obtener el carrito del almacenamiento local
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-  // Actualizar la cantidad en el carrito en localStorage
   cart[index].quantity = parseInt(quantityInput.value);
   localStorage.setItem("cart", JSON.stringify(cart));
 
-  // Llamar a mostrarCarrito para actualizar la vista
   mostrarCarrito(cart);
-
-  // Llamar a calcularEnvio para actualizar el precio del envio
   calcularEnvio(selectedRadioButton);
-
 }
 
-function removeProduct(index, selectedRadioButton) { //Se ejecuta cuando se elimina un producto del carrito
-
-  // Obtener el carrito del almacenamiento local
+function removeProduct(index, selectedRadioButton) {
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-  // Eliminar el producto del carrito por su índice
   cart.splice(index, 1);
 
-  // Guardar el carrito actualizado en localStorage
   localStorage.setItem("cart", JSON.stringify(cart));
 
-  // Volver a mostrar el carrito actualizado
   mostrarCarrito(cart);
-
-  // Llamar a calcularEnvio para actualizar el precio del envio
   calcularEnvio(selectedRadioButton);
 }
 
 function calcularEnvio(radioButton) {
-
-  //Obtengo el elemento con id precioEnvio
   let precioEnvio = document.getElementById("precioEnvio");
-  let envioFinal = 0; //Inicializo en 0
+  let envioFinal = 0;
 
-  //Si premium esta seleccionado
   if (radioButton.value === "premium") {
-    console.log('Radio button Premium seleccionado'); //Verificacion interna
-    envioFinal = (subtotalFinal * 0.15).toFixed(2); //Calculo el precio del envio
-    precioEnvio.textContent = 'USD ' + envioFinal; //Cambio el contenido al subtotal más el porcentaje, con 2 cifras luego de la coma
-    calcularTotal(envioFinal); //Llamo a la función que calcula el total
-  } //Si express esta seleccionado
-  else if (radioButton.value === "express") {
-    console.log('Radio button Express seleccionado');//Verificacion interna
-    envioFinal = (subtotalFinal * 0.07).toFixed(2);//Calculo el precio del envio
-    precioEnvio.textContent = 'USD ' + envioFinal; //Cambio el contenido al subtotal más el porcentaje, con 2 cifras luego de la coma
-    calcularTotal(envioFinal); //Llamo a la función que calcula el total
-  } //Si standard esta seleccionado
-  else if (radioButton.value === "standard") {
-    console.log('Radio button Standard seleccionado');//Verificacion interna
-    envioFinal = (subtotalFinal * 0.05).toFixed(2);//Calculo el precio del envio
-    precioEnvio.textContent = 'USD ' + envioFinal; //Cambio el contenido al subtotal más el porcentaje, con 2 cifras luego de la coma
-    calcularTotal(envioFinal); //Llamo a la función que calcula el total
+    console.log('Radio button Premium seleccionado');
+    envioFinal = (subtotalFinal * 0.15).toFixed(2);
+    precioEnvio.textContent = 'USD ' + envioFinal;
+    calcularTotal(envioFinal);
+  } else if (radioButton.value === "express") {
+    console.log('Radio button Express seleccionado');
+    envioFinal = (subtotalFinal * 0.07).toFixed(2);
+    precioEnvio.textContent = 'USD ' + envioFinal;
+    calcularTotal(envioFinal);
+  } else if (radioButton.value === "standard") {
+    console.log('Radio button Standard seleccionado');
+    envioFinal = (subtotalFinal * 0.05).toFixed(2);
+    precioEnvio.textContent = 'USD ' + envioFinal;
+    calcularTotal(envioFinal);
   }
-
 }
 
-function calcularTotal(envioFinal) { //Recibe el precio del envio
-
-  let total = document.getElementById("total"); //Obtengo el elemento html donde se muestra el total
-  let precioTotal = parseFloat(subtotalFinal) + parseFloat(envioFinal); //Sumo el subtotal final con el precio del envio
-  total.textContent = 'USD ' + precioTotal; //Actualizo el contenido del total
-
+function calcularTotal(envioFinal) {
+  let total = document.getElementById("total");
+  let precioTotal = parseFloat(subtotalFinal) + parseFloat(envioFinal);
+  total.textContent = 'USD ' + precioTotal;
 }
 
 function habilitarCampos(metodoPago) {
-  // Obtener los campos de entrada relevantes
   const camposTarjeta = document.querySelectorAll('.campos-tarjeta');
   const camposTransferencia = document.querySelectorAll('.campos-transferencia');
   const metodoPagoSeleccionado = document.getElementById("metodoPagoSeleccionado");
 
   if (metodoPago === 'credit_card') {
-    // Deshabilitar campos de transferencia y agregar el fondo gris
     camposTransferencia.forEach(campo => {
       campo.disabled = true;
-      campo.style.backgroundColor = '#ccc'; // Fondo gris
-      campo.value = ''; // Borra el contenido del campo
+      campo.style.backgroundColor = '#ccc';
+      campo.value = '';
     });
 
-    // Habilitar campos de tarjeta de crédito
     camposTarjeta.forEach(campo => {
       campo.disabled = false;
-      campo.style.backgroundColor = ''; // Restablecer el fondo
-    })
+      campo.style.backgroundColor = '';
+    });
 
     metodoPagoSeleccionado.innerHTML = "Tarjeta de Crédito";
   } else if (metodoPago === 'bank') {
-    // Deshabilitar campos de tarjeta de crédito y agregar el fondo gris
     camposTarjeta.forEach(campo => {
       campo.disabled = true;
-      campo.style.backgroundColor = '#ccc'; // Fondo gris
-      campo.value = ''; // Borra el contenido del campo
+      campo.style.backgroundColor = '#ccc';
+      campo.value = '';
     });
 
-    // Habilitar campos de transferencia bancaria
     camposTransferencia.forEach(campo => {
       campo.disabled = false;
-      campo.style.backgroundColor = ''; // Restablecer el fondo
+      campo.style.backgroundColor = '';
     });
 
     metodoPagoSeleccionado.innerHTML = "Transferencia bancaria";
@@ -233,7 +197,6 @@ function habilitarCampos(metodoPago) {
 }
 
 function validarEnvio() {
-
   const inputCalle = document.getElementById("calle");
   if (inputCalle.value === "") {
     inputCalle.classList.add("is-invalid");
@@ -278,39 +241,32 @@ function validarEnvio() {
       inputEsquina.classList.remove("is-invalid");
     }
   })
-
 }
 
 function validarTipoEnvio() {
-
-  //Obtengo los radio buttons
   const envioPremium = document.getElementById("envioPremium");
   const envioExpress = document.getElementById("envioExpress");
   const envioStandard = document.getElementById("envioStandard");
+  const tipoEnvios = document.getElementById("tipoEnvios");
 
-  const tipoEnvios = document.getElementById("tipoEnvios"); //Obtengo el elemento que se hizo para relacionar a la alerta
-
-  if ((!(envioPremium.checked)) && (!(envioExpress.checked)) && (!(envioStandard.checked))) { //Si ninguno esta seleccionado
-    tipoEnvios.classList.add("is-invalid"); //Se muestra el error
+  if ((!(envioPremium.checked)) && (!(envioExpress.checked)) && (!(envioStandard.checked))) {
+    tipoEnvios.classList.add("is-invalid");
     console.log("probando");
-  } else { //Si por lo menos uno esta seleccionado
-    tipoEnvios.classList.remove("is-invalid"); //No se muestra el error
+  } else {
+    tipoEnvios.classList.remove("is-invalid");
   }
 }
 
-
 function validarCamposTarjeta() {
+  const metodo = document.getElementById("metodoNoSeleccionado");
+  const inputaccountNumber = document.getElementById("accountNumber");
+  inputaccountNumber.classList.remove("is-invalid");
 
-  const metodo = document.getElementById("metodoNoSeleccionado"); //Boton Seleccionar
-
-  const inputaccountNumber = document.getElementById("accountNumber"); //Elemento numero de cuenta
-  inputaccountNumber.classList.remove("is-invalid"); //Se elimina el error
-
-  const inputcardNumber = document.getElementById("cardNumber"); //Numero de tarjeta
-  if (inputcardNumber.value === "") { //Si esta vacio
+  const inputcardNumber = document.getElementById("cardNumber");
+  if (inputcardNumber.value === "") {
     console.log("invalido numtarjeta");
-    inputcardNumber.classList.add("is-invalid"); //Se muestra error
-    metodo.classList.add("text-danger"); //El boton seleccionar se pone rojo
+    inputcardNumber.classList.add("is-invalid");
+    metodo.classList.add("text-danger");
   } else {
     inputcardNumber.classList.remove("is-invalid");
     metodo.classList.remove("text-danger");
@@ -335,19 +291,15 @@ function validarCamposTarjeta() {
   }
 }
 
-
 function validarCamposTransferencia() {
-
   const metodo = document.getElementById("metodoNoSeleccionado");
   const inputaccountNumber = document.getElementById("accountNumber");
-
   const inputcardNumber = document.getElementById("cardNumber");
   inputcardNumber.classList.remove("is-invalid");
   const inputSecurityCode = document.getElementById("securityCode");
   inputSecurityCode.classList.remove("is-invalid")
   const inputexpirationDate = document.getElementById("expirationDate");
   inputexpirationDate.classList.remove("is-invalid");
-
 
   if (inputaccountNumber.value === "") {
     inputaccountNumber.classList.add("is-invalid");
@@ -361,7 +313,6 @@ function validarCamposTransferencia() {
 function validarPago() {
   const credito = document.getElementById("credit_card");
   const transferencia = document.getElementById("bank");
-
   const metodo = document.getElementById("metodoNoSeleccionado");
 
   if ((!(credito.checked)) && (!(transferencia.checked))) {
@@ -371,22 +322,21 @@ function validarPago() {
     metodo.classList.remove("is-invalid");
     metodo.classList.remove("text-danger");
   }
-
 }
 
 function validarCantidad() {
   let cart = JSON.parse(localStorage.getItem("cart"));
-  for (const product of cart) { // Recorre los productos del carrito
+  for (const product of cart) {
     if (product.quantity <= 0) {
       alert("La cantidad del producto " + product.name + " debe ser mayor a 0");
     }
   }
-
 }
 
 const confirmarCompra = document.getElementById("confirmarCompra");
 
-confirmarCompra.addEventListener("click", function () { //Cuando se hace click sobre el boton confirmar compra se ejecutan las validaciones
+confirmarCompra.addEventListener("click", function () {
+  // Cuando se hace clic en el botón de confirmar compra, se ejecutan las validaciones
 
   const credito = document.getElementById("credit_card");
   const transferencia = document.getElementById("bank");
@@ -396,18 +346,18 @@ confirmarCompra.addEventListener("click", function () { //Cuando se hace click s
   validarTipoEnvio();
   validarCantidad();
 
-  if (credito.checked) { //Si se selecciona tarjeta
-    validarCamposTarjeta(); //Se validan los campos de tarjeta
-  } else if (transferencia.checked) { //Si se selecciona transferencia
-    validarCamposTransferencia(); //Se validan los campos de transferencia
+  if (credito.checked) { // Si se selecciona tarjeta
+    validarCamposTarjeta(); // Se validan los campos de tarjeta
+  } else if (transferencia.checked) { // Si se selecciona transferencia
+    validarCamposTransferencia(); // Se validan los campos de transferencia
   }
 
-  credito.addEventListener("click", function () { //Si se cambia luego a tarjeta
+  credito.addEventListener("click", function () { // Si se cambia luego a tarjeta
     validarCamposTarjeta();
-  })
-  transferencia.addEventListener("click", function () { //Si se cambia a transferencia
+  });
+  transferencia.addEventListener("click", function () { // Si se cambia a transferencia
     validarCamposTransferencia();
-  })
+  });
 
   // Verificar si todas las validaciones han pasado
   const errorFields = document.querySelectorAll('.is-invalid');
@@ -419,6 +369,4 @@ confirmarCompra.addEventListener("click", function () { //Cuando se hace click s
     // Algunas validaciones han fallado.
     alert("Por favor, corrige los campos resaltados en rojo antes de volver a confirmar la compra.");
   }
-
 });
-

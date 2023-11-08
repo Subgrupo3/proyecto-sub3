@@ -1,14 +1,43 @@
+// Verifica si la información del usuario está en el almacenamiento local al cargar la página
+window.addEventListener("load", () => {
+  const userName = localStorage.getItem("userName");
+  const password = localStorage.getItem("password");
+  const unameInput = document.getElementById("uname");
+  const pswInput = document.getElementById("psw");
 
-/* En index.html tengo un form con el id loginform. Voy a obtener este elemento por su id y 
-le agrego el Event Listener de la acción submit que tiene el login. */
+  if (userName) {
+    // Si se encuentra el nombre de usuario en el almacenamiento local, llénalo en el campo de nombre de usuario
+    unameInput.value = userName;
+  }
+
+  if (password) {
+    // Si se encuentra la contraseña en el almacenamiento local, llénala en el campo de contraseña
+    pswInput.value = password;
+  }
+});
+
+// Evento submit del formulario
 document.getElementById("loginform").addEventListener("submit", (e) => {
   e.preventDefault();
-  //Almacenamos en el almacenamiento local el valor de nombre de usuario ingresado por el usuario 
-  localStorage.setItem("userName", document.getElementById("uname").value);
-  /* El prevent default lo que hace es impedir que el navegador realice acciones por default, ya que quiero que realice las acciones en las próximas lineas.*/
-  sessionStorage.setItem("usuarioEstaLogueado", "confirmado");
-  window.location.href = "index.html";
+
+  // Almacena el valor del nombre de usuario y la contraseña ingresados por el usuario
+  const userName = document.getElementById("uname").value;
+  const password = document.getElementById("psw").value;
+  const rememberCheckbox = document.getElementById("remember");
+
+  if (rememberCheckbox.checked) {
+    // Si se selecciona "Recuérdame," almacena el nombre de usuario y la contraseña en el almacenamiento local
+    localStorage.setItem("userName", userName);
+    localStorage.setItem("password", password);
+  }
+
+  // Aquí debes realizar la validación real de usuario y contraseña en tu aplicación
+  // Reemplaza la siguiente línea con tu lógica de validación
+  if (userName !== "" && password !== "") {
+    sessionStorage.setItem("usuarioEstaLogueado", "confirmado");
+    window.location.href = "index.html";
+  } else {
+    // Muestra un mensaje de error al usuario, ya que las credenciales son incorrectas
+    alert("Credenciales incorrectas. Intente de nuevo.");
+  }
 });
-/* SessionStorage me permite almacenar información en la sesión a la que despues vamos a poder acceder en otras partes del código utilizando 
-una clave, en este caso "usuarioEstaLogueado". Se le asigna el valor "confirmado" y después en el código voy a buscar que este sea 
-el valor que tiene la clave para ver si está logueado o no.*/

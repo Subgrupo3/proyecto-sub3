@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
+  <!-- Configuración de metadatos -->
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>eMercado - Todo lo que busques está aquí</title>
+  
+  <!-- Enlaces a archivos CSS externos -->
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-T3c6CoI11uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-
 </head>
 
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-1">
     <div class="container">
+      <!-- Botón para mostrar/ocultar el menú en dispositivos móviles -->
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -38,7 +40,7 @@
               Usuario
             </button>
             <ul class="dropdown-menu" aria-labelledby="botonMenuUsuario">
-              <!--Acá agregamos las opciones del menu desplegable-->
+              <!-- Opciones del menú desplegable para usuarios -->
               <li><a class="dropdown-item" href="cart.html">Mi carrito</a></li>
               <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
               <li><a class="dropdown-item" href="login.html" id="link-cerrarsesion">Cerrar Sesión</a></li>
@@ -50,58 +52,58 @@
     </div>
   </nav>
   <main>
-    <div class="container"> <!--Contenedor-->
+    <div class="container"> <!-- Contenedor -->
       <div class="row">
         <div class="col-md-9 mx-auto">
-          <br> <!--Espacio para que no quede pegado a la barra--->
-          <h2 id="tituloPerfil">Perfil</h2> <!---Titulo-->
-          <br><!--Espacio-->
-          <hr><!--Linea de separacion-->
-          <form class="row g-3 needs-validation mt-5" novalidate> <!--Formulario-->
+          <br> <!-- Espacio para que no quede pegado a la barra -->
+          <h2 id="tituloPerfil">Perfil</h2> <!-- Título -->
+          <br> <!-- Espacio -->
+          <hr> <!-- Línea de separación -->
+          <form class="row g-3 needs-validation mt-5" novalidate> <!-- Formulario -->
             <div class="row">
-              <div class="col-md-6 mb-4"> <!--Div para primer nombre, usa boostrap para indicar el tamanio y estilos-->
+              <div class="col-md-6 mb-4"> <!-- Div para primer nombre, usa Boostrap para indicar el tamaño y estilos -->
                 <label for="primerNombre" class="form-label">Primer nombre*</label>
                 <input type="text" class="form-control" id="inputPrimerNombre" value="" required>
-                <div class="invalid-feedback"> <!--Mensaje si es invalido-->
+                <div class="invalid-feedback"> <!-- Mensaje si es inválido -->
                   El campo no puede ser vacío
                 </div>
               </div>
-              <div class="col-md-6 mb-4"><!--Div para segundo nombre, usa boostrap para indicar el tamanio y estilos-->
+              <div class="col-md-6 mb-4"> <!-- Div para segundo nombre, usa Boostrap para indicar el tamaño y estilos -->
                 <label for="segundoNombre" class="form-label">Segundo nombre</label>
                 <input type="text" class="form-control" id="inputSegundoNombre" value="" required>
               </div>
               <div class="col-md-6 mb-4">
                 <label for="primerApellido" class="form-label">Primer apellido*</label>
-                <!--Div para primer apellido, usa boostrap para indicar el tamanio y estilos-->
+                <!-- Div para primer apellido, usa Boostrap para indicar el tamaño y estilos -->
                 <input type="text" class="form-control" id="inputPrimerApellido" value="" required>
-                <div class="invalid-feedback"> <!--Mensaje si es invalido-->
+                <div class="invalid-feedback"> <!-- Mensaje si es inválido -->
                   El campo no puede ser vacío
                 </div>
               </div>
               <div class="col-md-6 mb-4">
-                <!--Div para segundo apellido, usa boostrap para indicar el tamanio y estilos-->
+                <!-- Div para segundo apellido, usa Boostrap para indicar el tamaño y estilos -->
                 <label for="segundoApellido" class="form-label">Segundo apellido</label>
-                <input type="text" class="form-control" id="inputSegundoApellido" value="" required>
+                <input type text" class="form-control" id="inputSegundoApellido" value="" required>
               </div>
-              <div class="col-md-6 mb-4"><!--Div para email, usa boostrap para indicar el tamanio y estilos-->
+              <div class="col-md-6 mb-4"> <!-- Div para email, usa Boostrap para indicar el tamaño y estilos -->
                 <label for="e-mail" class="form-label">E-mail</label>
                 <input type="text" class="form-control" id="inputEmail" value="" required>
-                <div class="invalid-feedback"> <!--Mensaje si es invalido-->
+                <div class="invalid-feedback"> <!-- Mensaje si es inválido -->
                   Debe ingresar un e-mail válido
                 </div>
               </div>
-              <div class="col-md-6 mb-4"> <!--Div para el telefono, usa boostrap para indicar el tamanio y estilos-->
+              <div class="col-md-6 mb-4"> <!-- Div para el teléfono, usa Boostrap para indicar el tamaño y estilos -->
                 <label for="telefonoContacto" class="form-label">Teléfono de contacto*</label>
                 <input type="text" class="form-control" id="inputTelefono" value="" required>
-                <div class="invalid-feedback"><!--Mensaje si es invalido-->
+                <div class="invalid-feedback"> <!-- Mensaje si es inválido -->
                   El campo no puede ser vacío
                 </div>
               </div>
-              <div class="row mb-4"> <!--Cree una fila vacia para que quede espacio entre los inputs y el boton-->
-                <br> <!--Espacios-->
+              <div class="row mb-4"> <!-- Creé una fila vacía para que quede espacio entre los inputs y el botón -->
+                <br> <!-- Espacios -->
                 <br>
               </div>
-              <hr> <!--Linea dividora-->
+              <hr> <!-- Línea divisoria -->
               <br>
               <br>
               <div class="col-12 ">
@@ -112,8 +114,6 @@
         </div>
       </div>
     </div>
-
-
   </main>
   <footer class="text-muted">
     <div class="container d-flex justify-content-between align-items-center">
@@ -133,5 +133,4 @@
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
     crossorigin="anonymous"></script>
 </body>
-
 </html>

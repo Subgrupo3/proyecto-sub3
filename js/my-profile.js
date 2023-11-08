@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+  // Obtener referencias a los elementos HTML necesarios
   const primerNombre = document.getElementById("inputPrimerNombre");
   const segundoNombre = document.getElementById("inputSegundoNombre");
   const primerApellido = document.getElementById("inputPrimerApellido");
@@ -7,12 +8,10 @@ document.addEventListener("DOMContentLoaded", function () {
   const email = document.getElementById("inputEmail");
   const botonGuardarPerfil = document.getElementById("botonGuardarPerfil");
 
-  //Email
-  const user = localStorage.getItem("userName"); //Obtengo el correo que se guardo en el localStorage cuando se ingresó
+  // Email
+  const user = localStorage.getItem("userName"); // Obtengo el correo que se guardó en el localStorage cuando se ingresó
 
-  email.value = user; //Seteo el input de email para el correo que dio el usuario
-
-  
+  email.value = user; // Seteo el input de email con el correo que dio el usuario
 
   // Obtener los datos del usuario almacenados en el localStorage
   const userData = JSON.parse(localStorage.getItem("userData"));
@@ -27,8 +26,9 @@ document.addEventListener("DOMContentLoaded", function () {
     email.value = userData.email || "";
   }
 
+  // Agregar un evento de clic al botón "Guardar Perfil"
   botonGuardarPerfil.addEventListener("click", function (event) {
-    event.preventDefault();
+    event.preventDefault(); // Previene el comportamiento predeterminado del formulario
 
     // Guardar los datos del usuario en el localStorage
     const userData = {
@@ -39,18 +39,15 @@ document.addEventListener("DOMContentLoaded", function () {
       telefono: telefono.value,
       email: email.value,
     };
-    localStorage.setItem("userData", JSON.stringify(userData));
-    localStorage.setItem("userName", email.value);
+    localStorage.setItem("userData", JSON.stringify(userData)); // Almacena los datos del usuario
 
-    // Verificar campos obligatorios.
+    // Verificar campos obligatorios
     if (primerNombre.value.trim() === '' || primerApellido.value.trim() === '' || email.value.trim() === '') {
-      alert('Complete los campos obligatorios.');
+      alert('Complete los campos obligatorios.'); // Muestra una alerta si faltan campos obligatorios
     } else {
-      localStorage.setItem("userName", email.value);
-      alert('Los cambios han sido guardados.');
-      window.location.href = window.location.href;
+      localStorage.setItem("userName", email.value); // Almacena el nombre de usuario (correo)
+      alert('Los cambios han sido guardados.'); // Muestra una alerta de que los cambios se han guardado
+      window.location.href = window.location.href; // Recarga la página para reflejar los cambios
     }
   });
 });
-
-

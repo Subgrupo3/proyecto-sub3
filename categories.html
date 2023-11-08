@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
+  <!-- Configuración de metadatos -->
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>eMercado - Todo lo que busques está aquí</title>
 
-
+  <!-- Enlaces a hojas de estilos y fuentes -->
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
   <link href="css/font-awesome.min.css" rel="stylesheet">
   <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -14,14 +14,16 @@
 </head>
 
 <body>
+  <!-- Barra de navegación -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-1">
     <div class="container">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <!-- Botón para colapsar el menú en dispositivos móviles -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav w-100 justify-content-between">
+          <!-- Elementos del menú de navegación -->
           <li class="nav-item">
             <a class="nav-link" href="index.html">Inicio</a>
           </li>
@@ -31,13 +33,14 @@
           <li class="nav-item">
             <a class="nav-link" href="sell.html">Vender</a>
           </li>
+          
+          <!-- Menú desplegable de usuario -->
           <div id="user-menu" class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="botonMenuUsuario"
-              data-bs-toggle="dropdown" aria-expanded="false">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="botonMenuUsuario" data-bs-toggle="dropdown" aria-expanded="false">
               Usuario
             </button>
             <ul class="dropdown-menu" aria-labelledby="botonMenuUsuario">
-              <!--Acá agregamos las opciones del menu desplegable-->
+              <!-- Opciones del menú desplegable -->
               <li><a class="dropdown-item" href="cart.html">Mi carrito</a></li>
               <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
               <li><a class="dropdown-item" href="login.html" id="link-cerrarsesion">Cerrar Sesión</a></li>
@@ -48,6 +51,7 @@
       </div>
     </div>
   </nav>
+
   <main class="pb-5">
     <div class="text-center p-4">
       <h2>Categorías</h2>
@@ -57,6 +61,7 @@
       <div class="row">
         <div class="col text-end">
           <div class="btn-group btn-group-toggle mb-4" data-bs-toggle="buttons">
+            <!-- Botones de ordenamiento -->
             <input type="radio" class="btn-check" name="options" id="sortAsc">
             <label class="btn btn-light" for="sortAsc">A-Z</label>
             <input type="radio" class="btn-check" name="options" id="sortDesc">
@@ -68,7 +73,7 @@
       </div>
       <div class="row">
         <div class="col-lg-6 offset-lg-6 col-md-12 mb-1 container">
-          <!-- Aquí Agregamos una barra de busqueda -->
+          <!-- Barra de búsqueda -->
           <div class="col d-flex">
             <input id="searchInput" type="search" placeholder="Buscar...">
             <button class="btn btn-primary" id="buscador">Buscar</button>
@@ -85,10 +90,10 @@
             <div class="col">
               <input class="form-control" type="number" placeholder="máx." id="rangeFilterCountMax">
             </div>
-
           </div>
           <div class="col-3 p-0" id="botonesFiltro">
             <div class="btn-group" role="group">
+              <!-- Botones de filtro por cantidad -->
               <button class="btn btn-light btn-block" id="rangeFilterCount">Filtrar</button>
               <button class="btn btn-link btn-sm" id="clearRangeFilter">Limpiar</button>
             </div>
@@ -97,19 +102,21 @@
       </div>
       <div class="row">
         <div class="list-group" id="cat-list-container">
+          <!-- Contenedor de categorías -->
         </div>
       </div>
     </div>
   </main>
   <footer class="text-muted">
     <div class="container d-flex justify-content-between align-items-center">
-      <p class="text-secondary text-center mx-auto">Este sitio forma parte de <a
-          href="https://jovenesaprogramar.edu.uy/" target="_blank">Jóvenes a Programar</a></p>
+      <p class="text-secondary text-center mx-auto">Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jóvenes a Programar</a></p>
       <p class="text-end">
         <a href="#">Volver arriba</a>
       </p>
     </div>
   </footer>
+  
+  <!-- Spinner de carga -->
   <div id="spinner-wrapper">
     <div class="lds-ring">
       <div></div>
@@ -118,13 +125,12 @@
       <div></div>
     </div>
   </div>
+
+  <!-- Scripts de JavaScript -->
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="js/index.js"></script>
   <script src="js/init.js"></script>
   <script src="js/categories.js"></script>
   <script src="js/modo.js"></script>
-
-
 </body>
-
 </html>

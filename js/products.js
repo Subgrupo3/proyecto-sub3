@@ -1,6 +1,6 @@
-/*función que recibe un array con los datos, y los muestra en pantalla a través del uso del DOM.
- (Arregle la función para mostrar la lista de productos en el HTML, agregandolé un 
- products) 
+/* 
+   Esta función recibe un array de productos y muestra estos productos en el HTML.
+   La función ha sido corregida para mostrar la lista de productos en el contenedor "product-list-container".
 */
 
 let productsArray = [];
@@ -12,48 +12,41 @@ let currentSortCriteria = undefined;
 let minCount = undefined;
 let maxCount = undefined;
 
-
-
-
-// Aquí el elemento HTML en donde se mostrará la lista de productos
+// Aquí se selecciona el elemento HTML donde se mostrará la lista de productos
 const productListElement = document.getElementById("product-list-container");
 
-// Verifica si el usuario está logueado
+// Se verifica si el usuario está logueado
 if (sessionStorage.getItem("usuarioEstaLogueado") == "confirmado") {
-    // Obtiene el identificador de categoría almacenado en localStorage
+    // Se obtiene el identificador de categoría almacenado en localStorage
     let catID = localStorage.getItem("catID");
 
-    // Aquí verifica si el identificador es válido
+    // Se verifica si el identificador es válido
     if (catID) {
-        // Construí la URL para obtener los productos de las diferentes categorías
+        // Se construye la URL para obtener los productos de diferentes categorías
         let productsURL = `https://japceibal.github.io/emercado-api/cats_products/${catID}.json`;
 
-        // Realiza la solicitud de datos utilizando la URL actualizada
-
+        // Se realiza la solicitud de datos utilizando la URL actualizada
         fetch(productsURL)
             .then(function (response) {
                 return response.json();
             })
             .then(function (data) {
-                // Asigna los productos obtenidos al array productsArray
+                // Se asignan los productos obtenidos al array productsArray
                 productsArray = data.products;
-                //aca
-                productsArray.sort((a, b) => b.soldCount - a.soldCount);  // Aquí se ordenaron los productos en ventas de menor a mayor. 
+                productsArray.sort((a, b) => b.soldCount - a.soldCount);  // Se ordenan los productos por ventas de mayor a menor
                 showProductsList(productsArray);
-
 
                 // Llama a la función para mostrar la lista de productos en el HTML
                 showProductsList(productsArray);
-                // Obtiene el nombre de la categoría
-                const catName = data.catName; // Asegúrate de que "catName" sea la propiedad correcta en tu objeto de datos
 
-                // Obtén el elemento con el id "titulo"
+                // Se obtiene el nombre de la categoría
+                const catName = data.catName;
+
+                // Se obtiene el elemento con el id "catDescripcion"
                 const catDescripcion = document.getElementById("catDescripcion");
 
-                // Actualiza el contenido del elemento "titulo" con el nombre de la categoría
+                // Se actualiza el contenido del elemento "catDescripcion" con el nombre de la categoría
                 catDescripcion.textContent = `Verás aquí todos los productos de la categoría ${catName}`;
-
-
 
             })
             .catch(function (error) {
@@ -63,22 +56,21 @@ if (sessionStorage.getItem("usuarioEstaLogueado") == "confirmado") {
         console.log("Identificador de categoría no válido");
     }
 
+    // Función para establecer el ID de producto en el almacenamiento local y redirigir a la página de información del producto
     function setProdID(id) {
         localStorage.setItem("prodID", id);
         window.location = "product-info.html"
     };
 
-    /* Función que recibe un array con los datos y los muestra en pantalla a través del uso del DOM.
-       Aquí arregle la función para mostrar la lista de productos en el HTML, 
-       agregandole un products*/
+    /* 
+       Función que recibe un array de productos y los muestra en el HTML.
+       Se utiliza esta función para construir el contenido HTML que muestra la lista de productos.
+    */
     function showProductsList(productsArray) {
         let htmlContentToAppend = "";
 
-
-
         for (let i = 0; i < productsArray.length; i++) {
             let product = productsArray[i];
-
 
             htmlContentToAppend += `
             <div onclick="setProdID(${product.id})" class="list-group-item list-group-item-action cursor-active">
@@ -99,23 +91,22 @@ if (sessionStorage.getItem("usuarioEstaLogueado") == "confirmado") {
             </div>`;
         }
 
-        // Inserta el contenido HTML construido en el elemento productListElement
+        // Se inserta el contenido HTML construido en el elemento productListElement
         productListElement.innerHTML = htmlContentToAppend;
     }
 
-    //Obtener el item definido en login.js con la key userName
+    // Obtiene el nombre de usuario almacenado en localStorage
     let storedData = localStorage.getItem("userName");
 
-    //Obtenemos los elementos con id user para mostrar el usuario en el html
+    // Obtiene los elementos con la clase "user" para mostrar el nombre de usuario en el HTML
     let mostrarUser = document.getElementsByClassName("user");
 
-    //Agregamos el nombre de usuario al html
+    // Agrega el nombre de usuario al HTML
     for (let i = 0; i < mostrarUser.length; i++) {
         mostrarUser[i].textContent = storedData;
     }
 
-
-    // Eventos que pasan cuando se hace click
+    // Eventos que ocurren cuando se hace clic en los botones de ordenamiento
     ORDER_ASC_BY_PRICE.addEventListener("click", function () {
         sortAndShowProducts(ORDER_ASC_BY_PRICE);
     });
@@ -127,7 +118,6 @@ if (sessionStorage.getItem("usuarioEstaLogueado") == "confirmado") {
     ORDER_BY_PROD_COUNT.addEventListener("click", function () {
         sortAndShowProducts(ORDER_BY_PROD_COUNT);
     });
-
 } else {
     window.location.href = "login.html";
 }
@@ -165,10 +155,10 @@ function sortProducts(criteria, array) {
             return 0;
         });
     }
-    return array;
+    return result;
 }
 
-//Funcion limpiar
+// Función para limpiar los campos de filtro
 document.getElementById("clearRangeFilterP").addEventListener("click", function () {
     document.getElementById("rangeFilterCountMinP").value = "";
     document.getElementById("rangeFilterCountMaxP").value = "";
@@ -179,22 +169,22 @@ document.getElementById("clearRangeFilterP").addEventListener("click", function 
     showProductsList();
 });
 
-//Funcion filtrar
+// Función para filtrar productos por precio
 document.addEventListener("DOMContentLoaded", function (filtrarPrecio) {
-    //Definimos variables con los inputs
+    // Se definen variables con los inputs
     const minPriceInput = document.getElementById("rangeFilterCountMinP");
     const maxPriceInput = document.getElementById("rangeFilterCountMaxP");
     const applyFilterButton = document.getElementById("rangeFilterCountP");
 
-    //Lo que pasa cunado se hace click en filtrar
+    // Lo que sucede cuando se hace clic en el botón de filtrar
     applyFilterButton.addEventListener("click", applyPriceFilter);
 
     function applyPriceFilter() {
-        //Parseamos a int los valores de los input y los asignamos a variables
+        // Se analizan como enteros los valores de los inputs y se asignan a variables
         const minPrice = parseInt(minPriceInput.value);
         const maxPrice = parseInt(maxPriceInput.value);
 
-        // Obtener todos los elementos de producto (debe ser un array, no un NodeList)
+        // Se obtienen todos los elementos de producto
         const productItems = productListElement.getElementsByClassName("list-group-item");
 
         for (const product of productItems) {
@@ -212,11 +202,8 @@ document.addEventListener("DOMContentLoaded", function (filtrarPrecio) {
     }
 });
 
-//Busqueda
-document.addEventListener("DOMContentLoaded", function (e) { //Cuando la pagina se cargue
-
-
-
+// Función para realizar la búsqueda de productos
+document.addEventListener("DOMContentLoaded", function (e) {
     const searchInput = document.getElementById("searchInput");
     const productItems = document.getElementsByClassName("list-group-item");
 
@@ -231,20 +218,17 @@ document.addEventListener("DOMContentLoaded", function (e) { //Cuando la pagina 
     });
 
     function performSearch() {
-        const searchTerm = searchInput.value.toLowerCase();//Convertir todas las letras a minusculas
+        const searchTerm = searchInput.value.toLowerCase();//Convertir todas las letras a minúsculas
 
         for (const product of productItems) {
-            const productName = product.querySelector(".mb-1 h4").textContent.toLowerCase(); //Obtener el valor de el nombre de el producto
-            const productDescription = product.querySelector(".mb-1 p").textContent.toLowerCase();//Obtener el valor de la descripcion de el producto
+            const productName = product.querySelector(".mb-1 h4").textContent.toLowerCase();
+            const productDescription = product.querySelector(".mb-1 p").textContent.toLowerCase();
 
-            if (productName.includes(searchTerm) || productDescription.includes(searchTerm)) {//Si se cumple la condicion, muestra el producto. y sino lo oculta
+            if (productName.includes(searchTerm) || productDescription.includes(searchTerm)) {
                 product.style.display = "block";
             } else {
                 product.style.display = "none";
             }
         }
     }
-
-
 });
-
