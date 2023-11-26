@@ -162,39 +162,7 @@ function calcularTotal(envioFinal) {
   total.textContent = 'USD ' + precioTotal;
 }
 
-function habilitarCampos(metodoPago) {
-  const camposTarjeta = document.querySelectorAll('.campos-tarjeta');
-  const camposTransferencia = document.querySelectorAll('.campos-transferencia');
-  const metodoPagoSeleccionado = document.getElementById("metodoPagoSeleccionado");
 
-  if (metodoPago === 'credit_card') {
-    camposTransferencia.forEach(campo => {
-      campo.disabled = true;
-      campo.style.backgroundColor = '#ccc';
-      campo.value = '';
-    });
-
-    camposTarjeta.forEach(campo => {
-      campo.disabled = false;
-      campo.style.backgroundColor = '';
-    });
-
-    metodoPagoSeleccionado.innerHTML = "Tarjeta de Crédito";
-  } else if (metodoPago === 'bank') {
-    camposTarjeta.forEach(campo => {
-      campo.disabled = true;
-      campo.style.backgroundColor = '#ccc';
-      campo.value = '';
-    });
-
-    camposTransferencia.forEach(campo => {
-      campo.disabled = false;
-      campo.style.backgroundColor = '';
-    });
-
-    metodoPagoSeleccionado.innerHTML = "Transferencia bancaria";
-  }
-}
 
 function validarEnvio() {
   const inputCalle = document.getElementById("calle");
@@ -254,6 +222,40 @@ function validarTipoEnvio() {
     console.log("probando");
   } else {
     tipoEnvios.classList.remove("is-invalid");
+  }
+}
+
+function habilitarCampos(metodoPago) {
+  const camposTarjeta = document.querySelectorAll('.campos-tarjeta');
+  const camposTransferencia = document.querySelectorAll('.campos-transferencia');
+  const metodoPagoSeleccionado = document.getElementById("metodoPagoSeleccionado");
+
+  if (metodoPago === 'credit_card') {
+    camposTransferencia.forEach(campo => {
+      campo.disabled = true;
+      campo.style.backgroundColor = '#ccc';
+      campo.value = '';
+    });
+
+    camposTarjeta.forEach(campo => {
+      campo.disabled = false;
+      campo.style.backgroundColor = '';
+    });
+
+    metodoPagoSeleccionado.innerHTML = "Tarjeta de Crédito";
+  } else if (metodoPago === 'bank') {
+    camposTarjeta.forEach(campo => {
+      campo.disabled = true;
+      campo.style.backgroundColor = '#ccc';
+      campo.value = '';
+    });
+
+    camposTransferencia.forEach(campo => {
+      campo.disabled = false;
+      campo.style.backgroundColor = '';
+    });
+
+    metodoPagoSeleccionado.innerHTML = "Transferencia bancaria";
   }
 }
 
