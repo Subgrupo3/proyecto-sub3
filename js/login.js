@@ -32,7 +32,6 @@ document.getElementById("loginform").addEventListener("submit", (e) => {
   }
 
   // Aquí debes realizar la validación real de usuario y contraseña en tu aplicación
-  // Reemplaza la siguiente línea con tu lógica de validación
   if (userName !== "" && password !== "") {
     sessionStorage.setItem("usuarioEstaLogueado", "confirmado");
     window.location.href = "index.html";
